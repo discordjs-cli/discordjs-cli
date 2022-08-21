@@ -1,5 +1,6 @@
 const { stdout } = require('process');
 const chalk = require('chalk');
+const slashCommand = require('./components/slash_command');
 
 async function generate(options) {
     if (options.type === undefined) {
@@ -7,7 +8,8 @@ async function generate(options) {
         return;
     };
 
-    console.log(options);
+    if (options.type === 'command' || options.type === 'c') return slashCommand(options);
+    if (options.type === 'command' || options.type === 'c') return slashCommand(options);
 };
 
 module.exports = generate;
