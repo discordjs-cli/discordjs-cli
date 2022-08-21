@@ -1,10 +1,10 @@
 {
-  "name": "@baeonette/discordjs-cli",
-  "version": "1.0.0",
+  "name": "@discordjs-cli/discordjs-cli",
+  "version": "1.0.4",
   "description": "A CLI for creating Discord.js bots with ease",
   "main": "arc/index.js",
   "bin": {
-    "@baeonette/discordjs-cli": "bin/discordjs-cli",
+    "@discordjs-cli/discordjs-cli": "bin/discordjs-cli",
     "djs": "bin/discordjs-cli"
   },
   "publishConfig": {
@@ -21,14 +21,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/baeonette/discordjs-cli.git"
+    "url": "git+https://github.com/discordjs-cli/discordjs-cli.git"
   },
   "author": "baeonette",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/baeonette/discordjs-cli/issues"
+    "url": "https://github.com/discordjs-cli/discordjs-cli/issues"
   },
-  "homepage": "https://github.com/baeonette/discordjs-cli#readme",
+  "homepage": "https://github.com/discordjs-cli/discordjs-cli#readme",
   "dependencies": {
     "arg": "^5.0.2",
     "chalk": "^4.1.2",
