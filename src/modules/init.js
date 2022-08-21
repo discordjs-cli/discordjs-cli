@@ -97,22 +97,22 @@ async function newDiscordBot(options) {
     // Add DJS project config
     var configSpinner = createSpinner(chalk.blue('Adding config files...'), { color: 'white' }).start();
     await writeFile(`./${name}/djs.json`, JSON.stringify(djsconfig, null, 4), (err) => {
-        if (err) return console.log('An error occurred') && process.exit(1);
+        if (err) return console.log('An error occurred with djs.json') && process.exit(1);
     });
 
     // Add package.json
     await writeFile(`./${name}/package.json`, JSON.stringify(package, null, 4), (err) => {
-        if (err) return console.log('An error occurred') && process.exit(1);
+        if (err) return console.log('An error occurred package.json') && process.exit(1);
     });
 
     // Add config folder for bot config
     await mkdir(`./${name}/config`, (err) => {
-        if (err) return console.log('An error occurred') && process.exit(1);
+        if (err) return console.log('An error occurred config folder') && process.exit(1);
     });
 
     // Add bot config JSON
     await writeFile(`./${name}/config/config.json`, JSON.stringify(configJSON, null, 4), (err) => {
-        if (err) return console.log('An error occurred') && process.exit(1);
+        if (err) return console.log('An error occurred ./config/config.json') && process.exit(1);
     });
     configSpinner.stop();
 
