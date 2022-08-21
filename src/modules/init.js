@@ -2,7 +2,8 @@ const { stdout } = require('process');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
 const { createSpinner } = require('nanospinner');
-const fs = require('fs');
+const clone = require('git-clone/promise');
+const { writeFile, mkdir } = require('fs');
 
 async function newDiscordBot(options) {
 
@@ -36,6 +37,10 @@ async function newDiscordBot(options) {
     });
 
     var framework = format.framework;
+    var fw;
+
+    if (framework === 'JavaScript') fw = 'js'
+    else if (framework === 'TypeScript') fw = 'ts';
 
     djsconfig.format = framework;
 
@@ -76,35 +81,54 @@ async function newDiscordBot(options) {
         TYPE: 'Watching'
     };
 
-    /*********************************
-     *         File Creation         * 
-     *********************************/
+    /******************************
+     *      Project Creation      * 
+     ******************************/
 
-    // Create project root
-    fs.mkdirSync(`./${name}`, (err) => {
-        if (err) return 'An error occurred' && process.exit(1);
-    });
+    // Create project root off github repo
+    console.log('');
+
+    var cloningSpinner = createSpinner(chalk.blue('Creating project folder...'), { color: 'white' }).start();
+
+    await clone(`https://github.com/discordjs-cli/${fw}-boilerplate`, `${name}`).catch((err) => { if (err.toString().endsWith('128')) { console.log(chalk.red(`\n\nA folder already exists named "${name}"`)); process.exit(1) } else if (err) console.log(err) });
+
+    cloningSpinner.stop();
 
     // Add DJS project config
-    fs.writeFileSync(`./${name}/djs.json`, JSON.stringify(djsconfig, null, 4), (err) => {
-        if (err) return 'An error occurred' && process.exit(1);
+    var configSpinner = createSpinner(chalk.blue('Adding config files...'), { color: 'white' }).start();
+    await writeFile(`./${name}/djs.json`, JSON.stringify(djsconfig, null, 4), (err) => {
+        if (err) return console.log('An error occurred') && process.exit(1);
     });
 
     // Add package.json
-    fs.writeFileSync(`./${name}/package.json`, JSON.stringify(package, null, 4), (err) => {
-        if (err) return 'An error occurred' && process.exit(1);
+    await writeFile(`./${name}/package.json`, JSON.stringify(package, null, 4), (err) => {
+        if (err) return console.log('An error occurred') && process.exit(1);
     });
 
     // Add config folder for bot config
-    fs.mkdirSync(`./${name}/config`, (err) => {
-        if (err) return 'An error occurred' && process.exit(1);
+    await mkdir(`./${name}/config`, (err) => {
+        if (err) return console.log('An error occurred') && process.exit(1);
     });
 
     // Add bot config JSON
-    fs.writeFileSync(`./${name}/config/config.json`, JSON.stringify(configJSON, null, 4), (err) => {
-        if (err) return 'An error occurred' && process.exit(1);
+    await writeFile(`./${name}/config/config.json`, JSON.stringify(configJSON, null, 4), (err) => {
+        if (err) return console.log('An error occurred') && process.exit(1);
     });
+    configSpinner.stop();
 
+    console.log('');
+
+    /******************************
+     *      NPM installation      * 
+     ******************************/
+    stdout.write(chalk.blue(chalk.bold(name)));
+    stdout.write(chalk.white(' has been created. Run'));
+    stdout.write(chalk.yellow(' npm install'));
+    stdout.write(chalk.white(` in the "${name}" folder to install dependencies, then add the bots token to the`));
+    stdout.write(chalk.green(' ./config/config.json'));
+    stdout.write(chalk.white(' file. Lastly, execute'));
+    stdout.write(chalk.yellow(' djs run'));
+    stdout.write(chalk.white(` to start your bot!\n\n`));
 };
 
 module.exports = newDiscordBot;
