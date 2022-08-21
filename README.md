@@ -1,3 +1,5 @@
+### BETA RELEASE
+
 ## A CLI for creating Discord.js bots with ease.
 
 # Installation:
