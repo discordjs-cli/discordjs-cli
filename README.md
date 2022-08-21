@@ -1,2 +1,3 @@
-# discordjs-cli
-A Discord.js CLI for creating Discord bots with ease 
+To do: add TypeScript support.
+
+Initiate a new project with `djs new <project-name>`. This will create a Discord.js template project.
