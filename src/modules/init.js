@@ -127,8 +127,8 @@ async function newDiscordBot(options) {
     stdout.write(chalk.white(` in the "${name}" folder to install dependencies, then add the bots token to the`));
     stdout.write(chalk.green(' ./config/config.json'));
     stdout.write(chalk.white(' file. Lastly, execute'));
-    stdout.write(chalk.yellow(' djs run'));
-    stdout.write(chalk.white(` to start your bot!\n\n`));
+    stdout.write(chalk.yellow(' npm start'));
+    stdout.write(chalk.white(` to run your bot!\n\n`));
 };
 
 module.exports = newDiscordBot;

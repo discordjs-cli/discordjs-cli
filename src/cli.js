@@ -37,12 +37,6 @@ export function cli(args) {
         case 'new':
             newDiscordBot(options);
             break;
-        case 'g':
-            generate(options);
-            break;
-        case 'generate':
-            generate(options);
-            break;
 
         case undefined:
             intro();
