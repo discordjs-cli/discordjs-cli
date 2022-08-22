@@ -2,7 +2,7 @@ const { stdout } = require('process');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
 const { createSpinner } = require('nanospinner');
-const clone = require('git-clone/promise');
+const download = require('download-git-repo');
 const { writeFile, mkdir, readFile, readFileSync } = require('fs');
 
 async function slashCommand(options) {
@@ -17,8 +17,6 @@ async function slashCommand(options) {
         return;
     };
 
-    var commandName = options.component;
-
     try {
         var djsconfig = JSON.parse(readFileSync('./djsconfig.json', 'utf8'));
     } catch (err) {
@@ -31,8 +29,24 @@ async function slashCommand(options) {
         console.log(err);
     }
 
-    console.log(djsconfig);
+    var cmd = {
+        version: djsconfig.version,
+        name: options.component,
+        format: djsconfig.format,
+        fw: null
+    }
 
+    if (cmd.format === 'JavaScript') { cmd.fw = 'js' }
+    else if (cmd.format === 'TypeScript') { cmd.fw = 'ts' }
+    else console.log(chalk.red(`\nUnknown djsconfig format "${cmd.format}". Valid options are JavaScript and Typescript\n`)) && process.exit(1);
+
+    console.log(cmd);
+
+    download(`github:discordjs-cli/${fw}-boilerplate-command#${cmd.version}`, `interactions/${cmd.name}`, {}, (err, suc) => {
+        console.log(err);
+        console.log(suc);
+        console.log('finished');
+    })
 };
 
 module.exports = slashCommand;
