@@ -5,6 +5,7 @@ const { createSpinner } = require('nanospinner');
 const clone = require('git-clone/promise');
 const download = require('download-git-repo');
 const { writeFile, mkdir, readFileSync, writeFileSync, mkdirSync, cpSync, rm } = require('fs');
+const { exec, execSync } = require('child_process');
 
 async function newDiscordBot(options) {
 
@@ -90,7 +91,7 @@ async function newDiscordBot(options) {
 
     var cloningSpinner = createSpinner(chalk.blue('Creating project folder...'), { color: 'white' }).start();
 
-    await download(`github:discordjs-cli/${fw}-boilerplate`, `${name}`, (err) => { if (err && err.toString().endsWith('128')) { console.log(chalk.red(`\n\nA folder already exists named "${name}"`)); process.exit(1) } else if (err) console.log(err) });
+    await download(`github:discordjs-cli/${fw}-boilerplate#${version}`, `${name}`, (err) => { if (err && err.toString().endsWith('128')) { console.log(chalk.red(`\n\nA folder already exists named "${name}"`)); process.exit(1) } else if (err) console.log(err) });
     await clone(`https://github.com/discordjs-cli/djsconfig`, `${name}/djsconfig`).catch((err) => { if (err.toString().endsWith('128')) { console.log(chalk.red(`\n\nA djsconfig file already exists`)); process.exit(1) } else if (err) console.log(err) });
 
     try {
@@ -113,6 +114,7 @@ async function newDiscordBot(options) {
 
         djsconfig.project = name;
         djsconfig.format = framework;
+        djsconfig.version = version;
 
         writeFileSync(`./${name}/djsconfig.json`, JSON.stringify(djsconfig, null, 4), (err) => {
             if (err) return console.log('An error occurred updating the djsconfig.json file') && process.exit(1);
@@ -125,7 +127,7 @@ async function newDiscordBot(options) {
     try {
         var package = JSON.parse(readFileSync(`./${name}/package.json`, 'utf8'));
 
-        package.name = name.toLowerCase().replace(/ /g, '-');
+        package.name = name.toString().toLowerCase().replace(/ /g, '-');
         package.description = 'A Discord.js bot created with the discordjs-cli';
 
         writeFileSync(`./${name}/package.json`, JSON.stringify(package, null, 4), (err) => {
@@ -146,15 +148,17 @@ async function newDiscordBot(options) {
     });
     configSpinner.stop();
 
-    console.log('');
-
     /******************************
      *      NPM installation      * 
      ******************************/
+    var npmInstall = createSpinner(chalk.blue('Installing node modules...'), { color: 'white' }).start();
+    execSync(`cd "${name}"; npm i`);
+    npmInstall.stop();
+
+    console.log('');
+
     stdout.write(chalk.blue(chalk.bold(name)));
-    stdout.write(chalk.white(' has been created. Run'));
-    stdout.write(chalk.yellow(' npm install'));
-    stdout.write(chalk.white(` in the "${name}" folder to install dependencies, then add the bots token to the`));
+    stdout.write(chalk.white(` has been created. Add the bots token to the`));
     stdout.write(chalk.green(' ./config/config.json'));
     stdout.write(chalk.white(' file. Lastly, execute'));
     stdout.write(chalk.yellow(' djs run'));
