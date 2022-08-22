@@ -5,7 +5,6 @@ const { createSpinner } = require('nanospinner');
 const clone = require('git-clone/promise');
 const download = require('download-git-repo');
 const { writeFile, mkdir, readFileSync, writeFileSync, mkdirSync, cpSync, rm } = require('fs');
-const { exec } = require('child_process');
 
 async function newDiscordBot(options) {
 
