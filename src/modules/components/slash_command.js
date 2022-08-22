@@ -42,7 +42,7 @@ async function slashCommand(options) {
 
     console.log(cmd);
 
-    download(`github:discordjs-cli/${fw}-boilerplate-command#${cmd.version}`, `interactions/${cmd.name}`, {}, (err, suc) => {
+    download(`github:discordjs-cli/${fw}-boilerplate-slash-command#${cmd.version}`, `interactions/${cmd.name}`, {}, (err, suc) => {
         console.log(err);
         console.log(suc);
         console.log('finished');
