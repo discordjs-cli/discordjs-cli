@@ -1,6 +1,6 @@
 import help from './modules/help';
 import intro from './modules/intro';
-import newDiscordBot from './modules/init';
+import newDiscordBot from './modules/create';
 import generate from './modules/generate';
 
 const arg = require('arg');
