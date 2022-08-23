@@ -2,7 +2,7 @@
   "name": "@baeonette/discordjs-cli",
   "version": "1.0.0",
   "description": "A CLI for creating Discord.js bots with ease",
-  "main": "arc/index.js",
+  "main": "src/index.js",
   "bin": {
     "@baeonette/discordjs-cli": "bin/discordjs-cli",
     "djs": "bin/discordjs-cli"
