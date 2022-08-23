@@ -40,7 +40,7 @@ djs run
 
 And your bot should be online!
 
-# Add commands, buttons menus, etc!
+# Add commands, buttons, menus, etc!
 ### NOTE: Commands must be run in the app root
 
 ### Create a slash command
@@ -60,6 +60,13 @@ djs generate subcommand <command-name/subcommand-name>
 ```
 
 This will create a new subcommand template in our `./src/interactions/slash_commands/<command>` folder, and import the subcommand function into the parent command. I prefer to use switch cases to handle subcommands, but play around with it to see what you prefer :D
+
+# Misc commands
+
+To check the version of djs, run the following command:
+```
+djs --version
+```
 
 ## Im still working on getting this to version 1, but I hope theres an appeal for it! :D
 If you've worked with the Angular CLI, then this will look familiar xD

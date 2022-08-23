@@ -11,18 +11,22 @@ async function compareVersion() {
             var latest = out
                 .toString()
                 .split('\n')
-                .filter((x) => x.startsWith('latest'))
+                .filter((x) => x.includes('latest'))
                 .join('')
-                .replace('latest: ', '');
+                .replace(' ', '')
+                .replace('latest', '')
+                .replace('\x1B[1m\x1B[32m', '')
+                .replace('\x1B[39m\x1B[22m', '')
+                .replace(':', '')
 
             var package = require('../../package.json');
 
             if (latest === package.version) return;
 
-            stdout.write(`\n\nA new version exists:`);
-            stdout.write(chalk.yellow(` ${package.version}`));
+            stdout.write(`\nA new version exists:`);
+            stdout.write(chalk.blue(` ${package.version}`));
             stdout.write(` =>`);
-            stdout.write(chalk.green(` ${latest}\n\n`));
+            stdout.write(chalk.yellow(` ${latest}\n\n`));
         }
     });
 }
