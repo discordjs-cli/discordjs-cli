@@ -1,11 +1,24 @@
 const chalk = require('chalk');
 const { stdout } = require('process');
 
-function help() {
+async function help() {
     stdout.write(chalk.bold(chalk.blue('\ndiscordjs-cli')));
     stdout.write(chalk.bold(chalk.white(' commands:\n\n')));
 
     var commands = [
+        {
+            command: 'djs --help',
+            description: 'Get a list of commands',
+        },
+        {
+            command: 'djs --version',
+            description: 'Check discordjs-cli version',
+            alias: 'djs -v'
+        },
+        {
+            command: 'djs update',
+            description: 'Update discordjs-cli',
+        },
         {
             command: 'djs new <project-name>',
             description: 'Create a new Discord.js bot',
