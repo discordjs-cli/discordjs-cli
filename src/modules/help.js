@@ -3,7 +3,7 @@ const { stdout } = require('process');
 
 async function help() {
     stdout.write(chalk.bold(chalk.blue('\ndiscordjs-cli')));
-    stdout.write(chalk.bold(chalk.white(' commands:\n\n')));
+    stdout.write(chalk.bold(' commands:\n\n'));
 
     var commands = [
         {
@@ -13,7 +13,7 @@ async function help() {
         {
             command: 'djs --version',
             description: 'Check discordjs-cli version',
-            alias: 'djs -v'
+            alias: 'djs -v',
         },
         {
             command: 'djs update',
@@ -66,15 +66,14 @@ async function help() {
     commands.forEach((c) => {
         var repeat = 0;
 
-        if ((stdout.columns - (`[${c.alias}]`.length + `${c.command}`.length + ` // ${c.description}`.length) - 1) > 0) repeat = (stdout.columns - (`[${c.alias}]`.length + `${c.command}`.length + ` // ${c.description}`.length) - 1);
+        if (stdout.columns - (`[${c.alias}]`.length + `${c.command}`.length + ` // ${c.description}`.length) - 1 > 0) repeat = stdout.columns - (`[${c.alias}]`.length + `${c.command}`.length + ` // ${c.description}`.length) - 1;
 
         stdout.write(chalk.yellow(`${c.command}`));
-        stdout.write(chalk.white(` // ${c.description}`));
+        stdout.write(` // ${c.description}`);
         stdout.write(' '.repeat(repeat));
         if (c.alias) stdout.write(chalk.yellow(` [${c.alias}]`));
         stdout.write('\n\n');
     });
-
-};
+}
 
 module.exports = help;

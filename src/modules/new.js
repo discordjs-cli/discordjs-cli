@@ -6,9 +6,9 @@ const clone = require('git-clone/promise');
 const download = require('download-git-repo');
 const { writeFile, mkdir, readFileSync, writeFileSync, mkdirSync, cpSync, rm } = require('fs');
 const { exec, execSync } = require('child_process');
+const { readdir } = require('fs/promises');
 
 async function newDiscordBot(options) {
-
     if (options.type === undefined) {
         stdout.write('Command usage: ');
 
@@ -17,25 +17,38 @@ async function newDiscordBot(options) {
         console.log('Run the "djs --help" command for more.');
 
         return;
-    };
+    }
 
     var name = options.type;
 
+    // Check if folder exists
+    var dirCheck;
+
+    try {
+        dirCheck = await readdir(`./${name}`);
+    } catch (err) {
+        dirCheck = false;
+    }
+
+    if (dirCheck) {
+        stdout.write(chalk.yellow(`WARNING:`));
+        stdout.write(` A folder named`);
+        stdout.write(chalk.blue(` "${name}"`));
+        stdout.write(` already exists in this directory. Process exited\n`);
+        process.exit(1);
+    }
     var format = await inquirer.prompt({
         name: 'framework',
         type: 'list',
         prefix: '>',
         message: 'Framework:\n',
-        choices: [
-            'JavaScript',
-            'TypeScript'
-        ]
+        choices: ['JavaScript', 'TypeScript'],
     });
 
     var framework = format.framework;
     var fw;
 
-    if (framework === 'JavaScript') fw = 'js'
+    if (framework === 'JavaScript') fw = 'js';
     else if (framework === 'TypeScript') fw = 'ts';
 
     var bot = await inquirer.prompt({
@@ -43,9 +56,7 @@ async function newDiscordBot(options) {
         type: 'list',
         prefix: '>',
         message: 'Discord.js version:\n',
-        choices: [
-            'Current (v14)',
-        ]
+        choices: ['Current (v14)'],
     });
 
     var version = bot.version.replace('Current (', '').replace(')', '');
@@ -57,7 +68,7 @@ async function newDiscordBot(options) {
         message: 'Prefix:',
         default() {
             return '!';
-        }
+        },
     });
 
     var botName = await inquirer.prompt({
@@ -67,7 +78,7 @@ async function newDiscordBot(options) {
         message: 'Bot name:',
         default() {
             return 'Jack Sparrow';
-        }
+        },
     });
 
     var configJSON = {
@@ -79,19 +90,21 @@ async function newDiscordBot(options) {
         LOG_CHANNEL: '',
         STATUS: 'idle',
         ACTIVITY: 'discord',
-        TYPE: 'Watching'
+        TYPE: 'Watching',
     };
 
     /******************************
-     *      Project Creation      * 
+     *      Project Creation      *
      ******************************/
 
     // Create project root off github repo
     console.log('');
 
-    var cloningSpinner = createSpinner(chalk.blue('Creating project folder...'), { color: 'white' }).start();
+    var cloningSpinner = createSpinner(chalk.blue('Creating project folder...'), {
+        color: 'white',
+    }).start();
 
-    await new Promise(r => {
+    await new Promise((r) => {
         download(`github:discordjs-cli/${fw}-boilerplate#${version}`, `${name}`, (err) => {
             if (err && err.toString().endsWith('128')) {
                 console.log(chalk.red(`\n\nA folder already exists named "${name}"`));
@@ -100,9 +113,14 @@ async function newDiscordBot(options) {
 
             return r();
         });
-    })
+    });
 
-    await clone(`https://github.com/discordjs-cli/djsconfig`, `${name}/djsconfig`).catch((err) => { if (err.toString().endsWith('128')) { console.log(chalk.red(`\n\nA djsconfig file already exists`)); process.exit(1) } else if (err) console.log(err) });
+    await clone(`https://github.com/discordjs-cli/djsconfig`, `${name}/djsconfig`).catch((err) => {
+        if (err.toString().endsWith('128')) {
+            console.log(chalk.red(`\n\nA djsconfig file already exists`));
+            process.exit(1);
+        } else if (err) console.log(err);
+    });
 
     try {
         // Handle djsconfig creation
@@ -118,7 +136,9 @@ async function newDiscordBot(options) {
     cloningSpinner.success();
 
     // Add DJS project config
-    var configSpinner = createSpinner(chalk.blue('Adding config files...'), { color: 'white' }).start();
+    var configSpinner = createSpinner(chalk.blue('Adding config files...'), {
+        color: 'white',
+    }).start();
     try {
         var djsconfig = JSON.parse(readFileSync(`./${name}/djsconfig.json`, 'utf8'));
 
@@ -161,20 +181,22 @@ async function newDiscordBot(options) {
     configSpinner.success();
 
     /******************************
-     *      NPM installation      * 
+     *      NPM installation      *
      ******************************/
-    var npmInstall = createSpinner(chalk.blue('Installing node modules...'), { color: 'white' }).start();
+    var npmInstall = createSpinner(chalk.blue('Installing node modules...'), {
+        color: 'white',
+    }).start();
     execSync(`cd "${name}"; npm i`);
     npmInstall.success();
 
     console.log('');
 
     stdout.write(chalk.blue(chalk.bold(name)));
-    stdout.write(chalk.white(` has been created. Add the bots token to the`));
+    stdout.write(` has been created. Add the bots token to the`);
     stdout.write(chalk.green(' ./src/config/config.json'));
-    stdout.write(chalk.white(' file. Lastly, execute'));
+    stdout.write(' file. Lastly, execute');
     stdout.write(chalk.yellow(' djs run'));
-    stdout.write(chalk.white(` to start your bot!\n\n`));
-};
+    stdout.write(` to start your bot!\n\n`);
+}
 
 module.exports = newDiscordBot;

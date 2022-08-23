@@ -28,7 +28,7 @@ function parseArgs(rawArgs) {
         operation: args._[0],
         type: args._[1],
         component: args._[2],
-    }
+    };
 }
 
 export async function cli(args) {

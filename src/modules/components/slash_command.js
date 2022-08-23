@@ -23,7 +23,7 @@ async function slashCommand(options) {
     } catch (err) {
         if (err.toString().includes('no such file or directory, open \'./djsconfig.json\'')) {
             console.log(chalk.bold(chalk.red('Error: This command is not available when running the discordjs-cli outside a workspace.')));
-            stdout.write(chalk.white('\nTo initiate a djs workspace in an existing directory, run'));
+            stdout.write('\nTo initiate a djs workspace in an existing directory, run');
             stdout.write(chalk.yellow(' djs init\n'));
             return;
         }

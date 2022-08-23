@@ -7,7 +7,6 @@ const { writeFile, mkdir, readFile, readFileSync, writeFileSync } = require('fs'
 const { rename, readdir } = require('fs/promises');
 
 async function subCommand(options) {
-
     if (options.component === undefined) {
         stdout.write('Command usage: ');
 
@@ -16,14 +15,14 @@ async function subCommand(options) {
         console.log('Run the "djs --help" command for more.');
 
         return;
-    };
+    }
 
     try {
         var djsconfig = JSON.parse(readFileSync('./djsconfig.json', 'utf8'));
     } catch (err) {
-        if (err.toString().includes('no such file or directory, open \'./djsconfig.json\'')) {
+        if (err.toString().includes("no such file or directory, open './djsconfig.json'")) {
             console.log(chalk.bold(chalk.red('Error: This command is not available when running the discordjs-cli outside a workspace.')));
-            stdout.write(chalk.white('\nTo initiate a djs workspace in an existing directory, run'));
+            stdout.write('\nTo initiate a djs workspace in an existing directory, run');
             stdout.write(chalk.yellow(' djs init\n'));
             return;
         }
@@ -35,12 +34,14 @@ async function subCommand(options) {
         name: options.component.split('/')[0],
         sub: options.component.split('/')[1],
         format: djsconfig.format,
-        fw: null
-    }
+        fw: null,
+    };
 
-    if (cmd.format === 'JavaScript') { cmd.fw = 'js' }
-    else if (cmd.format === 'TypeScript') { cmd.fw = 'ts' }
-    else console.log(chalk.red(`\nUnknown djsconfig format "${cmd.format}". Valid options are JavaScript and Typescript\n`)) && process.exit(1);
+    if (cmd.format === 'JavaScript') {
+        cmd.fw = 'js';
+    } else if (cmd.format === 'TypeScript') {
+        cmd.fw = 'ts';
+    } else console.log(chalk.red(`\nUnknown djsconfig format "${cmd.format}". Valid options are JavaScript and Typescript\n`)) && process.exit(1);
 
     var dir = await readdir(`./src/interactions/slash_commands/${cmd.name}/${cmd.sub}`).catch((err) => false);
 
@@ -53,7 +54,7 @@ async function subCommand(options) {
         console.log('Run the "djs --help" command for more.');
 
         return process.exit(1);
-    };
+    }
 
     if (!cmd.sub) {
         stdout.write('No subcommand specified. Command usage: ');
@@ -63,12 +64,12 @@ async function subCommand(options) {
         console.log('Run the "djs --help" command for more.');
 
         return process.exit(1);
-    };
+    }
 
     download(`github:discordjs-cli/${cmd.fw}-boilerplate-sub-command#${cmd.version}`, `src/interactions/slash_commands/${cmd.name}/${cmd.sub}-sub`, {}, async (err) => {
         if (err) console.log(err) && process.exit(1);
         try {
-            var buildCommand = createSpinner(chalk.blue(`Creating the ${cmd.sub} subcommand...`), { color: 'white' }).start()
+            var buildCommand = createSpinner(chalk.blue(`Creating the ${cmd.sub} subcommand...`), { color: 'white' }).start();
 
             // Rename file
             await rename(`./src/interactions/slash_commands/${cmd.name}/${cmd.sub}-sub/%command_name%.subcommand.${cmd.fw}`, `./src/interactions/slash_commands/${cmd.name}/${cmd.sub}-sub/${cmd.sub.replace(/ /g, '-')}.subcommand.${cmd.fw}`);
@@ -97,6 +98,6 @@ async function subCommand(options) {
             console.log(err) && process.exit(1);
         }
     });
-};
+}
 
 module.exports = subCommand;

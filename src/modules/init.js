@@ -9,8 +9,9 @@ const { exec, execSync } = require('child_process');
 const { readdir, readFile } = require('fs/promises');
 
 async function initDiscordBot(options) {
-
-    var doesExist = await readFile('./djsconfig.json', 'utf8', (err) => { if (err) return false });
+    var doesExist = await readFile('./djsconfig.json', 'utf8', (err) => {
+        if (err) return false;
+    });
 
     if (doesExist !== false) {
         console.log(chalk.red('\nERROR: A djsconfig.json file already exists in this directory. Process exited.\n'));
@@ -22,16 +23,13 @@ async function initDiscordBot(options) {
         type: 'list',
         prefix: '>',
         message: 'Framework:\n',
-        choices: [
-            'JavaScript',
-            'TypeScript'
-        ]
+        choices: ['JavaScript', 'TypeScript'],
     });
 
     var framework = format.framework;
     var fw;
 
-    if (framework === 'JavaScript') fw = 'js'
+    if (framework === 'JavaScript') fw = 'js';
     else if (framework === 'TypeScript') fw = 'ts';
 
     var bot = await inquirer.prompt({
@@ -39,22 +37,25 @@ async function initDiscordBot(options) {
         type: 'list',
         prefix: '>',
         message: 'Discord.js version:\n',
-        choices: [
-            'Current (v14)',
-        ]
+        choices: ['Current (v14)'],
     });
 
     var version = bot.version.replace('Current (', '').replace(')', '');
 
     /**************************
-     *      Init Project      * 
+     *      Init Project      *
      **************************/
 
     console.log('');
 
     var cloningSpinner = createSpinner(chalk.blue('Initiating djs project...'), { color: 'white' }).start();
 
-    await clone(`https://github.com/discordjs-cli/djsconfig`, `./djsconfig`).catch((err) => { if (err.toString().endsWith('128')) { console.log(chalk.red(`\n\nA djsconfig file already exists`)); process.exit(1) } else if (err) console.log(err) });
+    await clone(`https://github.com/discordjs-cli/djsconfig`, `./djsconfig`).catch((err) => {
+        if (err.toString().endsWith('128')) {
+            console.log(chalk.red(`\n\nA djsconfig file already exists`));
+            process.exit(1);
+        } else if (err) console.log(err);
+    });
 
     try {
         // Handle djsconfig creation
@@ -89,11 +90,11 @@ async function initDiscordBot(options) {
     console.log('');
 
     stdout.write(chalk.blue(chalk.bold(cwd().split('/').pop())));
-    stdout.write(chalk.white(` has been initiated. Add the bots token to the`));
+    stdout.write(` has been initiated. Add the bots token to the`);
     stdout.write(chalk.green(' ./src/config/config.json'));
-    stdout.write(chalk.white(' file. Lastly, execute'));
+    stdout.write(' file. Lastly, execute');
     stdout.write(chalk.yellow(' djs run'));
-    stdout.write(chalk.white(` to start your bot!\n\n`));
-};
+    stdout.write(` to start your bot!\n\n`);
+}
 
 module.exports = initDiscordBot;
