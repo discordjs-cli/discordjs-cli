@@ -2,6 +2,8 @@ import help from './modules/help';
 import intro from './modules/intro';
 import newDiscordBot from './modules/create';
 import generate from './modules/generate';
+import run from './modules/run';
+import initDiscordBot from './modules/init';
 
 const arg = require('arg');
 const chalk = require('chalk');
@@ -37,9 +39,19 @@ export function cli(args) {
         case 'new':
             newDiscordBot(options);
             break;
+
+        case 'run':
+            run();
+            break;
+
         case 'g':
             generate(options);
             break;
+
+        case 'init':
+            initDiscordBot();
+            break;
+
         case 'generate':
             generate(options);
             break;

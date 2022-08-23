@@ -60,11 +60,11 @@ async function slashCommand(options) {
 
             writeFileSync(`./src/interactions/slash_commands/${cmd.name}/${cmd.name.replace(/ /g, '-')}.command.${cmd.fw}`, update, { encoding: 'utf8' })
             
-            buildCommand.stop();
+            buildCommand.success();
 
             console.log(chalk.green('\nCommand created!'));
         } catch (err) {
-            buildCommand.stop();
+            buildCommand.error();
             console.log(err) && process.exit(1);
         }
     });

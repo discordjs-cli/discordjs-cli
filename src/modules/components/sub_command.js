@@ -89,11 +89,11 @@ async function subCommand(options) {
                 writeFileSync(`./src/interactions/slash_commands/${cmd.name}/${cmd.name}.command.${cmd.fw}`, commandFile, { encoding: 'utf8' });
             }
 
-            buildCommand.stop();
+            buildCommand.success();
 
             console.log(chalk.green('\nSubcommand created!'));
         } catch (err) {
-            buildCommand.stop();
+            buildCommand.error();
             console.log(err) && process.exit(1);
         }
     });

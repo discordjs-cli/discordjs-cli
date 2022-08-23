@@ -91,7 +91,17 @@ async function newDiscordBot(options) {
 
     var cloningSpinner = createSpinner(chalk.blue('Creating project folder...'), { color: 'white' }).start();
 
-    await download(`github:discordjs-cli/${fw}-boilerplate#${version}`, `${name}`, (err) => { if (err && err.toString().endsWith('128')) { console.log(chalk.red(`\n\nA folder already exists named "${name}"`)); process.exit(1) } else if (err) console.log(err) });
+    await new Promise(r => {
+        download(`github:discordjs-cli/${fw}-boilerplate#${version}`, `${name}`, (err) => {
+            if (err && err.toString().endsWith('128')) {
+                console.log(chalk.red(`\n\nA folder already exists named "${name}"`));
+                process.exit(1);
+            } else if (err) console.log(err) && process.exit(1);
+
+            return r();
+        });
+    })
+
     await clone(`https://github.com/discordjs-cli/djsconfig`, `${name}/djsconfig`).catch((err) => { if (err.toString().endsWith('128')) { console.log(chalk.red(`\n\nA djsconfig file already exists`)); process.exit(1) } else if (err) console.log(err) });
 
     try {
@@ -105,7 +115,7 @@ async function newDiscordBot(options) {
         process.exit(1);
     }
 
-    cloningSpinner.stop();
+    cloningSpinner.success();
 
     // Add DJS project config
     var configSpinner = createSpinner(chalk.blue('Adding config files...'), { color: 'white' }).start();
@@ -115,6 +125,8 @@ async function newDiscordBot(options) {
         djsconfig.project = name;
         djsconfig.format = framework;
         djsconfig.version = version;
+
+        if (fw === 'ts') djsconfig.run.default = 'npm run dev';
 
         writeFileSync(`./${name}/djsconfig.json`, JSON.stringify(djsconfig, null, 4), (err) => {
             if (err) return console.log('An error occurred updating the djsconfig.json file') && process.exit(1);
@@ -138,28 +150,28 @@ async function newDiscordBot(options) {
     }
 
     // Add config folder for bot config
-    mkdirSync(`./${name}/config`, (err) => {
+    mkdirSync(`./${name}/src/config`, (err) => {
         if (err) return console.log('An error occurred config folder') && process.exit(1);
     });
 
     // Add bot config JSON
-    writeFileSync(`./${name}/config/config.json`, JSON.stringify(configJSON, null, 4), (err) => {
-        if (err) return console.log('An error occurred creating ./config/config.json') && process.exit(1);
+    writeFileSync(`./${name}/src/config/config.json`, JSON.stringify(configJSON, null, 4), (err) => {
+        if (err) return console.log('An error occurred creating ./src/config/config.json') && process.exit(1);
     });
-    configSpinner.stop();
+    configSpinner.success();
 
     /******************************
      *      NPM installation      * 
      ******************************/
     var npmInstall = createSpinner(chalk.blue('Installing node modules...'), { color: 'white' }).start();
     execSync(`cd "${name}"; npm i`);
-    npmInstall.stop();
+    npmInstall.success();
 
     console.log('');
 
     stdout.write(chalk.blue(chalk.bold(name)));
     stdout.write(chalk.white(` has been created. Add the bots token to the`));
-    stdout.write(chalk.green(' ./config/config.json'));
+    stdout.write(chalk.green(' ./src/config/config.json'));
     stdout.write(chalk.white(' file. Lastly, execute'));
     stdout.write(chalk.yellow(' djs run'));
     stdout.write(chalk.white(` to start your bot!\n\n`));
