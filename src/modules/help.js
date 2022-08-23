@@ -10,6 +10,44 @@ function help() {
             command: 'djs new <project-name>',
             description: 'Create a new Discord.js bot',
         },
+        {
+            command: 'djs run',
+            description: 'Runs Discord.js bot',
+        },
+        {
+            command: 'djs init',
+            description: 'Makes an existing bot djs compatible',
+        },
+        {
+            command: 'djs generate command <command>',
+            description: 'Generate a slash command',
+            alias: 'djs g c <data>',
+        },
+        {
+            command: 'djs generate subcommand <path/to/cmd/subcmd>',
+            description: 'Generate a slash command sub-command',
+            alias: 'djs g s <data>',
+        },
+        // {
+        //     command: 'djs generate button <button>',
+        //     description: 'Generate a button',
+        //     alias: 'djs g b <data>',
+        // },
+        // {
+        //     command: 'djs generate menu <menu>',
+        //     description: 'Generate a menu',
+        //     alias: 'djs g m <data>',
+        // },
+        // {
+        //     command: 'djs generate menu-option <path/to/menu/option>',
+        //     description: 'Generate a menu option',
+        //     alias: 'djs g mo <data>',
+        // },
+        // {
+        //     command: 'djs generate legacy <command>',
+        //     description: 'Generate a legacy command',
+        //     alias: 'djs g l <data>',
+        // },
     ];
 
     commands.forEach((c) => {

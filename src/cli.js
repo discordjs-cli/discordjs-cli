@@ -1,7 +1,9 @@
 import help from './modules/help';
 import intro from './modules/intro';
-import newDiscordBot from './modules/init';
+import newDiscordBot from './modules/create';
 import generate from './modules/generate';
+import run from './modules/run';
+import initDiscordBot from './modules/init';
 
 const arg = require('arg');
 const chalk = require('chalk');
@@ -38,14 +40,29 @@ export function cli(args) {
             newDiscordBot(options);
             break;
 
+        case 'run':
+            run();
+            break;
+
+        case 'g':
+            generate(options);
+            break;
+
+        case 'generate':
+            generate(options);
+            break;
+
+        case 'init':
+            initDiscordBot();
+            break;
+
         case undefined:
             intro();
             break;
 
         default:
             console.log('> Unknown command, process exited');
-            process.exit(1);
-            break;
+            return process.exit(1);
     }
 
 }
