@@ -3,7 +3,8 @@ const chalk = require('chalk');
 const inquirer = require('inquirer');
 const { createSpinner } = require('nanospinner');
 const download = require('download-git-repo');
-const { writeFile, mkdir, readFile, readFileSync } = require('fs');
+const { writeFile, mkdir, readFile, readFileSync, writeFileSync } = require('fs');
+const { rename, readdir } = require('fs/promises');
 
 async function slashCommand(options) {
 
@@ -40,13 +41,33 @@ async function slashCommand(options) {
     else if (cmd.format === 'TypeScript') { cmd.fw = 'ts' }
     else console.log(chalk.red(`\nUnknown djsconfig format "${cmd.format}". Valid options are JavaScript and Typescript\n`)) && process.exit(1);
 
-    console.log(cmd);
+    var dir = await readdir(`./src/interactions/slash_commands/${cmd.name.split('/')[0]}`).catch((err) => false);
+    
+    if (dir !== false) stdout.write(chalk.bold(chalk.red('\nERROR:'))) & stdout.write(` "${cmd.name}" does not exists. Process exited.\n\n`) && process.exit(1);
+    
+    download(`github:discordjs-cli/${cmd.fw}-boilerplate-slash-command#${cmd.version}`, `src/interactions/slash_commands/${cmd.name}`, {}, async (err) => {
+        if (err) console.log(err) && process.exit(1);
+        try {
+            var buildCommand = createSpinner(chalk.blue(`Creating the ${cmd.name} slash command...`), { color: 'white' }).start()
 
-    download(`github:discordjs-cli/${fw}-boilerplate-slash-command#${cmd.version}`, `interactions/${cmd.name}`, {}, (err, suc) => {
-        console.log(err);
-        console.log(suc);
-        console.log('finished');
-    })
+            // Rename file
+            await rename(`./src/interactions/slash_commands/${cmd.name}/%command_name%.command.${cmd.fw}`, `./src/interactions/slash_commands/${cmd.name}/${cmd.name.replace(/ /g, '-')}.command.${cmd.fw}`);
+            
+            // Update contents
+            var update = readFileSync(`./src/interactions/slash_commands/${cmd.name}/${cmd.name.replace(/ /g, '-')}.command.${cmd.fw}`, 'utf8');
+
+            update = update.replace(/%command_name%/g, `${cmd.name.toLowerCase()}`);
+
+            writeFileSync(`./src/interactions/slash_commands/${cmd.name}/${cmd.name.replace(/ /g, '-')}.command.${cmd.fw}`, update, { encoding: 'utf8' })
+            
+            buildCommand.stop();
+
+            console.log(chalk.green('\nCommand created!'));
+        } catch (err) {
+            buildCommand.stop();
+            console.log(err) && process.exit(1);
+        }
+    });
 };
 
 module.exports = slashCommand;
