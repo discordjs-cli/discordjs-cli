@@ -48,12 +48,12 @@ export function cli(args) {
             generate(options);
             break;
 
-        case 'init':
-            initDiscordBot();
-            break;
-
         case 'generate':
             generate(options);
+            break;
+
+        case 'init':
+            initDiscordBot();
             break;
 
         case undefined:
@@ -62,8 +62,7 @@ export function cli(args) {
 
         default:
             console.log('> Unknown command, process exited');
-            process.exit(1);
-            break;
+            return process.exit(1);
     }
 
 }
