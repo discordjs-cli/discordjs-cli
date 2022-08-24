@@ -8,19 +8,6 @@ async function help() {
 
     var commands = [
         {
-            command: 'djs --help',
-            description: 'Get a list of commands',
-        },
-        {
-            command: 'djs --version',
-            description: 'Check discordjs-cli version',
-            alias: 'djs -v',
-        },
-        {
-            command: 'djs update',
-            description: 'Update discordjs-cli',
-        },
-        {
             command: 'djs new <project-name>',
             description: 'Create a new Discord.js bot',
         },
@@ -62,6 +49,19 @@ async function help() {
         //     description: 'Generate a legacy command',
         //     alias: 'djs g l <data>',
         // },
+        {
+            command: 'djs --help',
+            description: 'Get a list of commands',
+        },
+        {
+            command: 'djs --version',
+            description: 'Check discordjs-cli version',
+            alias: 'djs -v',
+        },
+        {
+            command: 'djs update',
+            description: 'Update discordjs-cli',
+        },
     ];
 
     commands.forEach((c) => {
