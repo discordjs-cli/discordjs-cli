@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const { stdout } = require('process');
 const puts = require('putsjs');
 
 async function help() {
