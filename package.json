@@ -16,8 +16,10 @@
   "keywords": [
     "cli",
     "discord.js",
+    "discord.ts",
     "discord",
-    "discordjs-cli"
+    "discordjs-cli",
+    "discord-cli"
   ],
   "repository": {
     "type": "git",

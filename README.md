@@ -9,6 +9,12 @@ sudo npm i -g @discordjs-cli/discordjs-cli
 ```
 
 ## Create a project
+
+Supported frameworks:
+
+- JavaScript
+- TypeScript
+
 Initiate a new project like so:
 ```
 djs new <project name>
