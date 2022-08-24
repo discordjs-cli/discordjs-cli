@@ -68,6 +68,14 @@ To check the version of djs, run the following command:
 djs --version
 ```
 
+To update the CLI, run the following command:
+```
+djs update
+```
+
+This will run `sudo npm i -g @discordjs-cli/discordjs-cli`. Note, you may be prompted for your password as the command is run with sudo.
+
+
 ## Im still working on getting this to version 1, but I hope theres an appeal for it! :D
 If you've worked with the Angular CLI, then this will look familiar xD
 
