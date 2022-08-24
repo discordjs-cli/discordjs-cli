@@ -1,9 +1,5 @@
 const chalk = require('chalk');
 const { execSync, exec } = require('child_process');
-const { readFile } = require('fs/promises');
-const { createSpinner } = require('nanospinner');
-const { stdout } = require('process');
-const compareVersion = require('./compare_version');
 
 async function update() {
     exec('npm view @discordjs-cli/discordjs-cli', async (err, out, stderr) => {
@@ -23,15 +19,15 @@ async function update() {
 
             var package = require('../../package.json');
 
-            if (latest === package.version) return  stdout.write(chalk.blue('discordjs-cli')) && stdout.write(' is up to date!\n') && process.exit(0);
+            if (latest === package.version) return  puts(chalk.blue('discordjs-cli')) && puts(' is up to date!\n') && process.exit(0);
 
-            stdout.write(`\nA new version exists:`);
-            stdout.write(chalk.blue(` ${package.version}`));
-            stdout.write(` =>`);
-            stdout.write(chalk.yellow(` ${latest}\n`));
+            puts(`\nA new version exists:`);
+            puts(chalk.blue(` ${package.version}`));
+            puts(` =>`);
+            puts(chalk.yellow(` ${latest}\n`));
 
-            stdout.write('\nProceeding to update:');
-            stdout.write(chalk.yellow(' sudo npm i -g @discordjs-cli/discordjs-cli\n\n'));
+            puts('\nProceeding to update:');
+            puts(chalk.yellow(' sudo npm i -g @discordjs-cli/discordjs-cli\n\n'));
 
             execSync('sudo npm i -g @discordjs-cli/discordjs-cli', { stdio: 'inherit' });
         }

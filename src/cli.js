@@ -7,10 +7,10 @@ import initDiscordBot from './modules/init';
 import version from './modules/version';
 import compareVersion from './modules/compare_version';
 import update from './modules/update';
+import puts from 'putsjs';
 
 const arg = require('arg');
 const chalk = require('chalk');
-const { stdout, stdin } = require('process');
 
 function parseArgs(rawArgs) {
     const args = arg(
@@ -37,7 +37,7 @@ export async function cli(args) {
 
     var nodeJSversion = parseInt(process.version.toString().split('.')[0].replace('v', ''));
 
-    if (nodeJSversion < 16) stdout.write(chalk.red('\nWARNING: ')) && stdout.write('This package was made for version ^16 of Node. You may experience errors on earlier versions of Node.\n\n');
+    if (nodeJSversion < 16) puts(chalk.red('\nWARNING: ')) && puts('This package was made for version ^16 of Node. You may experience errors on earlier versions of Node.\n\n');
 
     if (options.help) return help();
 

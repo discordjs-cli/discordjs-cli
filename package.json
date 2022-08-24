@@ -35,7 +35,8 @@
     "esm": "^3.2.25",
     "git-clone": "^0.2.0",
     "inquirer": "^8.2.4",
-    "nanospinner": "^1.1.0"
+    "nanospinner": "^1.1.0",
+    "putsjs": "^1.0.4"
   },
   "devDependencies": {
     "download-git-repo": "^3.0.2"

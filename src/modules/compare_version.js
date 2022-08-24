@@ -1,7 +1,6 @@
 const chalk = require('chalk');
 const { exec } = require('child_process');
-const { readFile } = require('fs/promises');
-const { stdout } = require('process');
+const puts = require('putsjs');
 
 async function compareVersion() {
     exec('npm view @discordjs-cli/discordjs-cli', async (err, out, stderr) => {
@@ -23,10 +22,11 @@ async function compareVersion() {
 
             if (latest === package.version) return;
 
-            stdout.write(`\nA new version exists:`);
-            stdout.write(chalk.blue(` ${package.version}`));
-            stdout.write(` =>`);
-            stdout.write(chalk.yellow(` ${latest}\n\n`));
+            puts(`\nA new version exists:`);
+            puts(chalk.blue(` ${package.version}`));
+            puts(` =>`);
+            puts(chalk.yellow(` ${latest}\n\n`));
+            
         }
     });
 }

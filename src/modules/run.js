@@ -1,6 +1,6 @@
-const { stdout, stdin } = require('process');
+const puts = require('putsjs');
 const chalk = require('chalk');
-const { exec, execSync } = require('child_process');
+const { execSync } = require('child_process');
 const { readFile } = require('fs/promises');
 const { createSpinner } = require('nanospinner');
 
@@ -10,8 +10,8 @@ async function run() {
     } catch (err) {
         if (err.toString().includes("no such file or directory, open './djsconfig.json'")) {
             console.log(chalk.bold(chalk.red('Error: This command is not available when running the discordjs-cli outside a workspace.')));
-            stdout.write('\nTo initiate a djs workspace in an existing directory, run');
-            stdout.write(chalk.yellow(' djs init\n'));
+            puts('\nTo initiate a djs workspace in an existing directory, run');
+            puts(chalk.yellow(' djs init\n'));
             return;
         }
         console.log(err);

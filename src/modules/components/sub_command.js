@@ -1,16 +1,15 @@
-const { stdout } = require('process');
 const chalk = require('chalk');
-const inquirer = require('inquirer');
 const { createSpinner } = require('nanospinner');
 const download = require('download-git-repo');
-const { writeFile, mkdir, readFile, readFileSync, writeFileSync } = require('fs');
+const { readFileSync, writeFileSync } = require('fs');
 const { rename, readdir } = require('fs/promises');
+const puts = require('putsjs');
 
 async function subCommand(options) {
     if (options.component === undefined) {
-        stdout.write('Command usage: ');
+        puts('Command usage: ');
 
-        stdout.write(chalk.yellow('djs g s <command/subcommand-name>\n\n'));
+        puts(chalk.yellow('djs g s <command/subcommand-name>\n\n'));
 
         console.log('Run the "djs --help" command for more.');
 
@@ -22,8 +21,8 @@ async function subCommand(options) {
     } catch (err) {
         if (err.toString().includes("no such file or directory, open './djsconfig.json'")) {
             console.log(chalk.bold(chalk.red('Error: This command is not available when running the discordjs-cli outside a workspace.')));
-            stdout.write('\nTo initiate a djs workspace in an existing directory, run');
-            stdout.write(chalk.yellow(' djs init\n'));
+            puts('\nTo initiate a djs workspace in an existing directory, run');
+            puts(chalk.yellow(' djs init\n'));
             return;
         }
         console.log(err);
@@ -45,11 +44,11 @@ async function subCommand(options) {
 
     var dir = await readdir(`./src/interactions/slash_commands/${cmd.name}/${cmd.sub}`).catch((err) => false);
 
-    if (dir !== false) stdout.write(chalk.bold(chalk.yellow('\nWARNING:'))) & stdout.write(` "${cmd.sub}" already exists on slash command "${cmd.name}". Process exited.\n\n`) && process.exit(1);
+    if (dir !== false) puts(chalk.bold(chalk.yellow('\nWARNING:'))) & puts(` "${cmd.sub}" already exists on slash command "${cmd.name}". Process exited.\n\n`) && process.exit(1);
     if (!cmd.name) {
-        stdout.write('No command specified. Command usage: ');
+        puts('No command specified. Command usage: ');
 
-        stdout.write(chalk.yellow('djs g s <command/subcommand-name>\n\n'));
+        puts(chalk.yellow('djs g s <command/subcommand-name>\n\n'));
 
         console.log('Run the "djs --help" command for more.');
 
@@ -57,9 +56,9 @@ async function subCommand(options) {
     }
 
     if (!cmd.sub) {
-        stdout.write('No subcommand specified. Command usage: ');
+        puts('No subcommand specified. Command usage: ');
 
-        stdout.write(chalk.yellow('djs g s <command/subcommand-name>\n\n'));
+        puts(chalk.yellow('djs g s <command/subcommand-name>\n\n'));
 
         console.log('Run the "djs --help" command for more.');
 

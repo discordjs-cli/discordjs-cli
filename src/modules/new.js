@@ -1,18 +1,18 @@
-const { stdout } = require('process');
+const puts = require('putsjs');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
 const { createSpinner } = require('nanospinner');
 const clone = require('git-clone/promise');
 const download = require('download-git-repo');
-const { writeFile, mkdir, readFileSync, writeFileSync, mkdirSync, cpSync, rm } = require('fs');
-const { exec, execSync } = require('child_process');
+const { readFileSync, writeFileSync, mkdirSync, cpSync, rm } = require('fs');
+const { execSync } = require('child_process');
 const { readdir } = require('fs/promises');
 
 async function newDiscordBot(options) {
     if (options.type === undefined) {
-        stdout.write('Command usage: ');
+        puts('Command usage: ');
 
-        stdout.write(chalk.yellow('djs new <project-name>\n\n'));
+        puts(chalk.yellow('djs new <project-name>\n\n'));
 
         console.log('Run the "djs --help" command for more.');
 
@@ -31,10 +31,10 @@ async function newDiscordBot(options) {
     }
 
     if (dirCheck) {
-        stdout.write(chalk.yellow(`WARNING:`));
-        stdout.write(` A folder named`);
-        stdout.write(chalk.blue(` "${name}"`));
-        stdout.write(` already exists in this directory. Process exited\n`);
+        puts(chalk.yellow(`WARNING:`));
+        puts(` A folder named`);
+        puts(chalk.blue(` "${name}"`));
+        puts(` already exists in this directory. Process exited\n`);
         process.exit(1);
     }
     var format = await inquirer.prompt({
@@ -191,12 +191,12 @@ async function newDiscordBot(options) {
 
     console.log('');
 
-    stdout.write(chalk.blue(chalk.bold(name)));
-    stdout.write(` has been created. Add the bots token to the`);
-    stdout.write(chalk.green(' ./src/config/config.json'));
-    stdout.write(' file. Lastly, execute');
-    stdout.write(chalk.yellow(' djs run'));
-    stdout.write(` to start your bot!\n\n`);
+    puts(chalk.blue(chalk.bold(name)));
+    puts(` has been created. Add the bots token to the`);
+    puts(chalk.green(' ./src/config/config.json'));
+    puts(' file. Lastly, execute');
+    puts(chalk.yellow(' djs run'));
+    puts(` to start your bot!\n\n`);
 }
 
 module.exports = newDiscordBot;

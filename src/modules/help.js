@@ -1,9 +1,9 @@
 const chalk = require('chalk');
-const { stdout } = require('process');
+const puts = require('putsjs');
 
 async function help() {
-    stdout.write(chalk.bold(chalk.blue('\ndiscordjs-cli')));
-    stdout.write(chalk.bold(' commands:\n\n'));
+    puts(chalk.bold(chalk.blue('\ndiscordjs-cli')));
+    puts(chalk.bold(' commands:\n\n'));
 
     var commands = [
         {
@@ -68,11 +68,11 @@ async function help() {
 
         if (stdout.columns - (`[${c.alias}]`.length + `${c.command}`.length + ` // ${c.description}`.length) - 1 > 0) repeat = stdout.columns - (`[${c.alias}]`.length + `${c.command}`.length + ` // ${c.description}`.length) - 1;
 
-        stdout.write(chalk.yellow(`${c.command}`));
-        stdout.write(` // ${c.description}`);
-        stdout.write(' '.repeat(repeat));
-        if (c.alias) stdout.write(chalk.yellow(` [${c.alias}]`));
-        stdout.write('\n\n');
+        puts(chalk.yellow(`${c.command}`));
+        puts(` // ${c.description}`);
+        puts(' '.repeat(repeat));
+        if (c.alias) puts(chalk.yellow(` [${c.alias}]`));
+        puts('\n\n');
     });
 }
 

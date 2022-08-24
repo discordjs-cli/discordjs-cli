@@ -1,12 +1,11 @@
-const { stdout, cwd } = require('process');
+const { cwd } = require('process');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
 const { createSpinner } = require('nanospinner');
 const clone = require('git-clone/promise');
-const download = require('download-git-repo');
-const { writeFile, mkdir, readFileSync, writeFileSync, mkdirSync, cpSync, rm } = require('fs');
-const { exec, execSync } = require('child_process');
-const { readdir, readFile } = require('fs/promises');
+const { readFileSync, writeFileSync, cpSync, rm } = require('fs');
+const { readFile } = require('fs/promises');
+const puts = require('putsjs');
 
 async function initDiscordBot(options) {
     var doesExist = await readFile('./djsconfig.json', 'utf8', (err) => {
@@ -89,12 +88,12 @@ async function initDiscordBot(options) {
 
     console.log('');
 
-    stdout.write(chalk.blue(chalk.bold(cwd().split('/').pop())));
-    stdout.write(` has been initiated. Add the bots token to the`);
-    stdout.write(chalk.green(' ./src/config/config.json'));
-    stdout.write(' file. Lastly, execute');
-    stdout.write(chalk.yellow(' djs run'));
-    stdout.write(` to start your bot!\n\n`);
+    puts(chalk.blue(chalk.bold(cwd().split('/').pop())));
+    puts(` has been initiated. Add the bots token to the`);
+    puts(chalk.green(' ./src/config/config.json'));
+    puts(' file. Lastly, execute');
+    puts(chalk.yellow(' djs run'));
+    puts(` to start your bot!\n\n`);
 }
 
 module.exports = initDiscordBot;
