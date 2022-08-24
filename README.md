@@ -65,7 +65,14 @@ To create a subcommand, run the following command:
 djs generate subcommand <command-name/subcommand-name>
 ```
 
-This will create a new subcommand template in our `./src/interactions/slash_commands/<command>` folder, and import the subcommand function into the parent command. I prefer to use switch cases to handle subcommands, but play around with it to see what you prefer :D
+### Adding a legacy command
+To create a legacy command, run the following command:
+```
+# alternatively, use djs g l <command-name>
+djs generate legacy <command-name>
+```
+
+This will create a new legacy command template in our `./src/interactions/legacy_commands/` folder.
 
 ## Misc commands
 
