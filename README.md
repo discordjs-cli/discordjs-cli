@@ -8,7 +8,7 @@ NOTE: You'll need to install the CLI globally in order for it to work. You may n
 sudo npm i -g @discordjs-cli/discordjs-cli
 ```
 
-### Create a project
+## Create a project
 Initiate a new project like so:
 ```
 djs new <project name>
@@ -23,7 +23,7 @@ djs run
 
 And your bot should be online!
 
-### Initiate a project
+## Initiate a project
 Initiate an existing project like so:
 ```
 djs init
@@ -40,7 +40,7 @@ djs run
 
 And your bot should be online!
 
-# Add commands, buttons, menus, etc!
+## Add commands, buttons, menus, etc!
 ### NOTE: Commands must be run in the app root
 
 ### Create a slash command
@@ -61,7 +61,7 @@ djs generate subcommand <command-name/subcommand-name>
 
 This will create a new subcommand template in our `./src/interactions/slash_commands/<command>` folder, and import the subcommand function into the parent command. I prefer to use switch cases to handle subcommands, but play around with it to see what you prefer :D
 
-# Misc commands
+## Misc commands
 
 To check the version of djs, run the following command:
 ```

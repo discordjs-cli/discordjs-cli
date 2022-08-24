@@ -1,6 +1,6 @@
 {
   "name": "@discordjs-cli/discordjs-cli",
-  "version": "1.0.10",
+  "version": "1.0.9",
   "description": "A CLI for creating Discord.js bots with ease",
   "main": "src/index.js",
   "bin": {
@@ -35,8 +35,7 @@
     "esm": "^3.2.25",
     "git-clone": "^0.2.0",
     "inquirer": "^8.2.4",
-    "nanospinner": "^1.1.0",
-    "node-cmd": "^5.0.0"
+    "nanospinner": "^1.1.0"
   },
   "devDependencies": {
     "download-git-repo": "^3.0.2"

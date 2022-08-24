@@ -6,6 +6,7 @@ import run from './modules/run';
 import initDiscordBot from './modules/init';
 import version from './modules/version';
 import compareVersion from './modules/compare_version';
+import update from './modules/update';
 
 const arg = require('arg');
 const chalk = require('chalk');
@@ -49,6 +50,16 @@ export async function cli(args) {
             if (num > 7) compareVersion();
             break;
 
+        case 'init':
+            await initDiscordBot();
+            var num = Math.floor(Math.random() * 10);
+            if (num > 7) compareVersion();
+            break;
+
+        case 'update':
+            await update();
+            break;
+
         case 'run':
             run();
             break;
@@ -59,12 +70,6 @@ export async function cli(args) {
 
         case 'generate':
             await generate(options);
-            break;
-
-        case 'init':
-            await initDiscordBot();
-            var num = Math.floor(Math.random() * 10);
-            if (num > 7) compareVersion();
             break;
 
         case undefined:
