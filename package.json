@@ -19,7 +19,8 @@
     "discord.ts",
     "discord",
     "discordjs-cli",
-    "discord-cli"
+    "discord-cli",
+    "discord bot"
   ],
   "repository": {
     "type": "git",
