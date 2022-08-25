@@ -1,14 +1,18 @@
 ### ⚠️ BETA RELEASE ⚠️
 # A CLI for creating Discord.js bots with ease.
 
-## Installation:
-NOTE: You'll need to install the CLI globally in order for it to work. You may need to install with sudo as well.
+##### Main updates:
+- Added deployment/update/delete script references to the djsconfig.json file
+- Added deployment/update/delete scripts to src/
+
+## ⚙️ Installation:
+NOTE: You'll need to install the CLI globally in order for it to work.
 
 ```
 sudo npm i -g @discordjs-cli/discordjs-cli
 ```
 
-## Create a project
+## 🌚 Create a project
 
 Supported frameworks:
 
@@ -29,14 +33,14 @@ djs run
 
 And your bot should be online!
 
-## Initiate a project
+## 🔨 Initiate a project
 Initiate an existing project like so:
 ```
 djs init
 ```
 This will walk you through the process of initiating an existing project. 
 
-NOTE: This only works for projects with the proper file structure.
+###### NOTE: This only works for projects with the proper file structure.
 
 Once your bot has been initiated, you can run:
 
@@ -46,9 +50,10 @@ djs run
 
 And your bot should be online!
 
-## Add commands, buttons, menus, etc!
+## 😌 Add commands, buttons, menus, etc!
 ### NOTE: Commands must be run in the app root
 
+# /Slash commands
 ### Create a slash command
 To create a slash command, run the following command:
 ```
@@ -65,6 +70,28 @@ To create a subcommand, run the following command:
 djs generate subcommand <command-name/subcommand-name>
 ```
 
+### Deploying slash commands
+###### NOTE: By default, commands are run for DEV commands; to the guild specified in your config.json file. Specify the `-g` flag in the command, ie. `djs deploy -g`, to run globally.
+
+To deploy slash commands, run the following command:
+```
+djs deploy
+```
+
+### Updating slash commands
+To update slash commands, run the following command:
+```
+djs update
+```
+
+### Deleting slash commands
+###### NOTE: This does NOT delete any files. It simply sets the bots commands to an empty array.
+To delete slash commands, run the following command:
+```
+djs delete
+```
+
+# !Legacy commands
 ### Create a legacy command
 To create a legacy command, run the following command:
 ```
