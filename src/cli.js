@@ -8,6 +8,7 @@ import version from './modules/version';
 import compareVersion from './modules/compare_version';
 import update from './modules/update';
 import puts from 'putsjs';
+import scripts from './modules/scripts';
 
 const arg = require('arg');
 const chalk = require('chalk');
@@ -17,7 +18,10 @@ function parseArgs(rawArgs) {
         {
             '--help': Boolean,
             '--version': Boolean,
+            '--global': Boolean,
+            '--update': Boolean,
             '-v': '--version',
+            '-g': '--global',
         },
         {
             argv: rawArgs.slice(2),
@@ -26,6 +30,8 @@ function parseArgs(rawArgs) {
     return {
         help: args['--help'] || false,
         version: args['--version'] || false,
+        global: args['--global'] || false,
+        update: args['--update'] || false,
         operation: args._[0],
         type: args._[1],
         component: args._[2],
@@ -43,6 +49,8 @@ export async function cli(args) {
 
     if (options.version) return version();
 
+    if (options.update) return update();
+
     switch (options.operation) {
         case 'new':
             await newDiscordBot(options);
@@ -56,8 +64,16 @@ export async function cli(args) {
             if (num > 7) compareVersion();
             break;
 
+        case 'deploy':
+            scripts(options);
+            break;
+
         case 'update':
-            await update();
+            await scripts(options);
+            break;
+
+        case 'delete':
+            scripts(options);
             break;
 
         case 'run':

@@ -1,5 +1,6 @@
 const chalk = require('chalk');
 const { execSync, exec } = require('child_process');
+const puts = require('putsjs');
 
 async function update() {
     exec('npm view @discordjs-cli/discordjs-cli', async (err, out, stderr) => {

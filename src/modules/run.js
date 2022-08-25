@@ -19,6 +19,7 @@ async function run() {
 
     var runSpinner = createSpinner(`Starting ${script.project}...`, { color: 'white' }).start();
     try {
+        if (!script.run.default) return runSpinner.error() && console.log(chalk.red('Error: Unable to find a run script in the djsconfig.json file. Process exited.'));
         execSync(script.run.default, { stdio: 'inherit' });
         runSpinner.success();
     } catch (err) {

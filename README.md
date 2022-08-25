@@ -65,7 +65,7 @@ To create a subcommand, run the following command:
 djs generate subcommand <command-name/subcommand-name>
 ```
 
-### Adding a legacy command
+### Create a legacy command
 To create a legacy command, run the following command:
 ```
 # alternatively, use djs g l <command-name>
@@ -83,7 +83,7 @@ djs --version
 
 To update the CLI, run the following command:
 ```
-djs update
+djs --update
 ```
 
 This will run `sudo npm i -g @discordjs-cli/discordjs-cli`. Note, you may be prompted for your password as the command is run with sudo.
