@@ -33,6 +33,8 @@ async function initDiscordBot(options) {
     if (framework === 'JavaScript') fw = 'js';
     else if (framework === 'TypeScript') fw = 'ts';
 
+    console.log('');
+
     var bot = await inquirer.prompt({
         name: 'version',
         type: 'list',

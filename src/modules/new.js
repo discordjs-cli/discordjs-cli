@@ -37,6 +37,7 @@ async function newDiscordBot(options) {
         puts(` already exists in this directory. Process exited\n`);
         process.exit(1);
     }
+
     var format = await inquirer.prompt({
         name: 'framework',
         type: 'list',
@@ -51,6 +52,8 @@ async function newDiscordBot(options) {
     if (framework === 'JavaScript') fw = 'js';
     else if (framework === 'TypeScript') fw = 'ts';
 
+    console.log('');
+
     var bot = await inquirer.prompt({
         name: 'version',
         type: 'list',
@@ -60,6 +63,8 @@ async function newDiscordBot(options) {
     });
 
     var version = bot.version.replace('Current (', '').replace(')', '');
+
+    console.log('');
 
     var pre = await inquirer.prompt({
         name: 'fix',
@@ -71,6 +76,8 @@ async function newDiscordBot(options) {
         },
     });
 
+    console.log('');
+
     var botName = await inquirer.prompt({
         name: 'name',
         type: 'input',
@@ -80,6 +87,8 @@ async function newDiscordBot(options) {
             return 'Jack Sparrow';
         },
     });
+
+    console.log('');
 
     var configJSON = {
         PREFIX: pre.fix,
@@ -98,7 +107,6 @@ async function newDiscordBot(options) {
      ******************************/
 
     // Create project root off github repo
-    console.log('');
 
     var cloningSpinner = createSpinner(chalk.blue('Creating project folder...'), {
         color: 'white',
