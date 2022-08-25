@@ -71,7 +71,10 @@ async function subCommand(options) {
             var buildCommand = createSpinner(chalk.blue(`Creating the ${cmd.sub} subcommand...`), { color: 'white' }).start();
 
             // Rename file
-            await rename(`./src/interactions/slash_commands/${cmd.name}/${cmd.sub}-sub/%command_name%.subcommand.${cmd.fw}`, `./src/interactions/slash_commands/${cmd.name}/${cmd.sub}-sub/${cmd.sub.replace(/ /g, '-')}.subcommand.${cmd.fw}`);
+            await rename(
+                `./src/interactions/slash_commands/${cmd.name}/${cmd.sub}-sub/%command_name%.subcommand.${cmd.fw}`,
+                `./src/interactions/slash_commands/${cmd.name}/${cmd.sub}-sub/${cmd.sub.replace(/ /g, '-')}.subcommand.${cmd.fw}`
+            );
 
             // Update contents
             var update = readFileSync(`./src/interactions/slash_commands/${cmd.name}/${cmd.sub}-sub/${cmd.sub.replace(/ /g, '-')}.subcommand.${cmd.fw}`, 'utf8');
@@ -81,11 +84,19 @@ async function subCommand(options) {
             writeFileSync(`./src/interactions/slash_commands/${cmd.name}/${cmd.sub}-sub/${cmd.sub.replace(/ /g, '-')}.subcommand.${cmd.fw}`, update, { encoding: 'utf8' });
 
             // Import into command file
-            var commandFile = readFileSync(`./src/interactions/slash_commands/${cmd.name}/${cmd.name.replace(/ /g, '-')}.command.${cmd.fw}`, 'utf8');
+            try {
+                var commandFile = readFileSync(`./src/interactions/slash_commands/${cmd.name}/${cmd.name.replace(/ /g, '-')}.command.${cmd.fw}`, 'utf8');
+            } catch (error) {
+                console.log(`\n\nUnable to add sub command import to ${cmd.name}, as file doesn't exist\n`)
+            }
 
             if (commandFile) {
-                if (cmd.fw === 'js') commandFile = `const ${cmd.sub.replace(/ /g, '').replace(/_/g, '').replace(/-/g, '')}Subcommand = require('./${cmd.sub}-sub/${cmd.sub}.subcommand.${cmd.fw}');\n` + commandFile;
-                if (cmd.fw === 'ts') commandFile = `import ${cmd.sub.replace(/ /g, '').replace(/_/g, '').replace(/-/g, '')}Subcommand from './${cmd.sub}-sub/${cmd.sub}.subcommand.${cmd.fw}';\n` + commandFile;
+                if (cmd.fw === 'js')
+                    commandFile =
+                        `const ${cmd.sub.replace(/ /g, '').replace(/_/g, '').replace(/-/g, '')}Subcommand = require('./${cmd.sub}-sub/${cmd.sub}.subcommand.${cmd.fw}');\n` + commandFile;
+                if (cmd.fw === 'ts')
+                    commandFile =
+                        `import ${cmd.sub.replace(/ /g, '').replace(/_/g, '').replace(/-/g, '')}Subcommand from './${cmd.sub}-sub/${cmd.sub}.subcommand.${cmd.fw}';\n` + commandFile;
                 writeFileSync(`./src/interactions/slash_commands/${cmd.name}/${cmd.name}.command.${cmd.fw}`, commandFile, { encoding: 'utf8' });
             }
 

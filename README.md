@@ -4,7 +4,7 @@
 ##### Main updates:
 - Added: button support
 - Bug fix: slash command file overwrite
-- Update: nothing
+- Update: error handling when adding sub commands
 
 ## ⚙️ Installation:
 NOTE: You'll need to install the CLI globally in order for it to work. Nodemon is used to run the projects, so go ahead and install that as well.

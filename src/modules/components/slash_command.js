@@ -62,7 +62,7 @@ async function slashCommand(options) {
             // Update contents
             var update = readFileSync(`./src/interactions/slash_commands/${cmd.name}/${cmd.name.replace(/ /g, '-')}.command.${cmd.fw}`, 'utf8');
 
-            update = update.replace(/%command_name%/g, `${cmd.name.toLowerCase()}`);
+            update = update.replace(/%command_name%/g, `${cmd.name.toLowerCase().replace(' ', '-')}`);
 
             writeFileSync(`./src/interactions/slash_commands/${cmd.name}/${cmd.name.replace(/ /g, '-')}.command.${cmd.fw}`, update, { encoding: 'utf8' });
 
