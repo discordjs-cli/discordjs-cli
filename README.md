@@ -2,8 +2,7 @@
 # A CLI for creating Discord.js bots with ease.
 
 ##### Main updates:
-- Added deployment/update/delete script references to the djsconfig.json file
-- Added deployment/update/delete scripts to src/
+- Bug fix: `djs init` had a bug where it wouldn't check if a djsconfig file existed already
 
 ## ⚙️ Installation:
 NOTE: You'll need to install the CLI globally in order for it to work. Nodemon is used to run the projects, so go ahead and install that as well.

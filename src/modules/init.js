@@ -8,11 +8,13 @@ const { readFile } = require('fs/promises');
 const puts = require('putsjs');
 
 async function initDiscordBot(options) {
-    var doesExist = await readFile('./djsconfig.json', 'utf8', (err) => {
-        if (err) return false;
-    });
+    try {
+        var doesExist = await readFile('./djsconfig.json', 'utf8', (err) => {
+            if (err) return true;
+        });
+    } catch (err) {}
 
-    if (doesExist !== false) {
+    if (doesExist) {
         console.log(chalk.red('\nERROR: A djsconfig.json file already exists in this directory. Process exited.\n'));
         return process.exit(1);
     }
