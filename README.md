@@ -6,7 +6,7 @@
 - Added deployment/update/delete scripts to src/
 
 ## ⚙️ Installation:
-NOTE: You'll need to install the CLI globally in order for it to work. Nodemon is used to run the projects, so go ahead and install that as well
+NOTE: You'll need to install the CLI globally in order for it to work. Nodemon is used to run the projects, so go ahead and install that as well.
 
 ```
 sudo npm i -g @discordjs-cli/discordjs-cli
