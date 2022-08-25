@@ -51,7 +51,6 @@ djs run
 And your bot should be online!
 
 ## 😌 Add commands, buttons, menus, etc!
-### NOTE: Commands must be run in the app root
 
 # /Slash commands
 #### NOTE: Slash commands need to be deployed in order for them to show up on discord
