@@ -2,9 +2,9 @@
 # A CLI for creating Discord.js bots with ease.
 
 ##### Main updates:
-- Added: deploy prompt when a slash command is made
-- Bug fix: `djs init` => scripts now have proper run prefix
-- Update: Edited response after `djs init` command is run
+- Added: button support
+- Bug fix: slash command file overwrite
+- Update: nothing
 
 ## ⚙️ Installation:
 NOTE: You'll need to install the CLI globally in order for it to work. Nodemon is used to run the projects, so go ahead and install that as well.
@@ -102,6 +102,39 @@ djs generate legacy <command-name>
 ```
 
 This will create a new legacy command template in our `./src/interactions/legacy_commands/` folder.
+
+# 🔘 Buttons
+### Create a button
+Button types:
+- Blank (blank button)
+- Role (reaction role button)
+
+To create a button, run the following command:
+```
+# alternatively, use djs g b <button-id>
+djs generate button <button-id>
+```
+
+Next, you'll be prompted for a row name:
+```
+> Row (default is button ID):
+```
+
+You can then choose which button template you want:
+```
+> Button type: (Use arrow keys)
+❯ Blank 
+  Role
+```
+
+Selecting "Blank" will create a blank template, while selecting "Role" will have one more prompt for a role ID:
+```
+> Role ID (leave blank to add later): 
+```
+
+And thats it! When a role with the button ID you provided is clicked, the newly created button handler will run!
+
+
 
 ## Misc commands
 
