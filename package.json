@@ -1,6 +1,6 @@
 {
   "name": "@discordjs-cli/discordjs-cli",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "A CLI for creating Discord.js bots with ease",
   "main": "src/index.js",
   "bin": {
@@ -23,7 +23,10 @@
     "discord bot",
     "javascript",
     "typescript",
-    "discord.ts"
+    "discord.ts",
+    "bot",
+    "discord bot cli",
+    "discord bot"
   ],
   "repository": {
     "type": "git",

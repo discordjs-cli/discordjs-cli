@@ -77,7 +77,19 @@ async function initDiscordBot(options) {
         djsconfig.format = framework;
         djsconfig.version = version;
 
+        var runTime;
+
         if (fw === 'ts') djsconfig.run.default = 'npm run dev';
+
+        if (fw === 'ts') runTime = 'tsc; node ./build/';
+        if (fw === 'js') runTime = 'node src/';
+
+        djsconfig.scripts['deploy-dev'] = djsconfig.scripts['deploy-dev'].replace('%run% ', runTime);
+        djsconfig.scripts['deploy-global'] = djsconfig.scripts['deploy-global'].replace('%run% ', runTime);
+        djsconfig.scripts['delete-dev'] = djsconfig.scripts['delete-dev'].replace('%run% ', runTime);
+        djsconfig.scripts['delete-global'] = djsconfig.scripts['delete-global'].replace('%run% ', runTime);
+        djsconfig.scripts['update-dev'] = djsconfig.scripts['update-dev'].replace('%run% ', runTime);
+        djsconfig.scripts['update-global'] = djsconfig.scripts['update-global'].replace('%run% ', runTime);
 
         writeFileSync(`./djsconfig.json`, JSON.stringify(djsconfig, null, 4), (err) => {
             if (err) return console.log('An error occurred updating the djsconfig.json file') && process.exit(1);
@@ -91,11 +103,7 @@ async function initDiscordBot(options) {
     console.log('');
 
     puts(chalk.blue(chalk.bold(cwd().split('/').pop())));
-    puts(` has been initiated. Add the bots token to the`);
-    puts(chalk.green(' ./src/config/config.json'));
-    puts(' file. Lastly, execute');
-    puts(chalk.yellow(' djs run'));
-    puts(` to start your bot!\n\n`);
+    puts(` has been initiated!\n`);
 }
 
 module.exports = initDiscordBot;
