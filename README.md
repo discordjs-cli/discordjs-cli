@@ -54,6 +54,7 @@ And your bot should be online!
 ### NOTE: Commands must be run in the app root
 
 # /Slash commands
+#### NOTE: Slash commands need to be deployed in order for them to show up on discord
 ### Create a slash command
 To create a slash command, run the following command:
 ```
