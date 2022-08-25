@@ -2,8 +2,8 @@
 # A CLI for creating Discord.js bots with ease.
 
 ##### Main updates:
-- Added: button support
-- Bug fix: slash command file overwrite
+- Added: sub command added in parent command
+- Bug fix: sub command file overwrite
 - Update: error handling when adding sub commands
 
 ## ⚙️ Installation:

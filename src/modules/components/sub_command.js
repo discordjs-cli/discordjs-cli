@@ -42,9 +42,19 @@ async function subCommand(options) {
         cmd.fw = 'ts';
     } else console.log(chalk.red(`\nUnknown djsconfig format "${cmd.format}". Valid options are JavaScript and Typescript\n`)) && process.exit(1);
 
-    var dir = await readdir(`./src/interactions/slash_commands/${cmd.name}/${cmd.sub}`).catch((err) => false);
+    // Check if folder exists
+    var dirCheck;
 
-    if (dir !== false) puts(chalk.bold(chalk.yellow('\nWARNING:'))) & puts(` "${cmd.sub}" already exists on slash command "${cmd.name}". Process exited.\n\n`) && process.exit(1);
+    try {
+        dirCheck = await readdir(`./src/interactions/slash_commands/${cmd.name}/${cmd.sub}-sub`);
+    } catch (err) {
+        dirCheck = false;
+    }
+
+    if (dirCheck) {
+        puts(chalk.bold(chalk.yellow('\nWARNING:'))) && puts(` "${cmd.sub}" already exists on slash command "${cmd.name}". Process exited.\n\n`) && process.exit(1);
+    }
+
     if (!cmd.name) {
         puts('No command specified. Command usage: ');
 
@@ -87,16 +97,27 @@ async function subCommand(options) {
             try {
                 var commandFile = readFileSync(`./src/interactions/slash_commands/${cmd.name}/${cmd.name.replace(/ /g, '-')}.command.${cmd.fw}`, 'utf8');
             } catch (error) {
-                console.log(`\n\nUnable to add sub command import to ${cmd.name}, as file doesn't exist\n`)
+                console.log(`\n\nUnable to add sub command import to ${cmd.name}\n`);
             }
 
             if (commandFile) {
-                if (cmd.fw === 'js')
+                if (cmd.fw === 'js') {
                     commandFile =
                         `const ${cmd.sub.replace(/ /g, '').replace(/_/g, '').replace(/-/g, '')}Subcommand = require('./${cmd.sub}-sub/${cmd.sub}.subcommand.${cmd.fw}');\n` + commandFile;
-                if (cmd.fw === 'ts')
+
+                    commandFile =
+                        commandFile.split('.setDMPermission')[0] +
+                        `.addSubcommand((subcommand) => subcommand.setName('${cmd.sub}').setDescription('${cmd.name} subcommand'))\n        .setDMPermission` +
+                        commandFile.split('.setDMPermission')[1];
+                } else if (cmd.fw === 'ts') {
                     commandFile =
                         `import ${cmd.sub.replace(/ /g, '').replace(/_/g, '').replace(/-/g, '')}Subcommand from './${cmd.sub}-sub/${cmd.sub}.subcommand.${cmd.fw}';\n` + commandFile;
+
+                    commandFile =
+                        commandFile.split('.setDMPermission')[0] +
+                        `.addSubcommand((subcommand: any) => subcommand.setName('${cmd.sub}').setDescription('${cmd.name} subcommand'))\n       .setDMPermission` +
+                        commandFile.split('.setDMPermission')[1];
+                }
                 writeFileSync(`./src/interactions/slash_commands/${cmd.name}/${cmd.name}.command.${cmd.fw}`, commandFile, { encoding: 'utf8' });
             }
 
