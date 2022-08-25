@@ -29,11 +29,11 @@ async function help() {
             description: 'Generate a slash command sub-command',
             alias: 'djs g s <data>',
         },
-        // {
-        //     command: 'djs generate button <button>',
-        //     description: 'Generate a button',
-        //     alias: 'djs g b <data>',
-        // },
+        {
+            command: 'djs generate button <button>',
+            description: 'Generate a button',
+            alias: 'djs g b <data>',
+        },
         // {
         //     command: 'djs generate menu <menu>',
         //     description: 'Generate a menu',

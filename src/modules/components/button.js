@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const { createSpinner } = require('nanospinner');
 const download = require('download-git-repo');
 const { readFileSync, writeFileSync } = require('fs');
-const { rename, readdir, readFile, cp } = require('fs/promises');
+const { rename, readdir, readFile, cp, rm } = require('fs/promises');
 const inquirer = require('inquirer');
 
 async function buttonBuilder(options) {
@@ -29,6 +29,19 @@ async function buttonBuilder(options) {
         console.log(err);
     }
 
+    var btn = {
+        version: djsconfig.version,
+        name: options.component,
+        format: djsconfig.format,
+        fw: null,
+    };
+
+    if (btn.format === 'JavaScript') {
+        btn.fw = 'js';
+    } else if (btn.format === 'TypeScript') {
+        btn.fw = 'ts';
+    } else console.log(chalk.red(`\nUnknown djsconfig format "${btn.format}". Valid options are JavaScript and Typescript\n`)) && process.exit(1);
+
     var getRow = await inquirer.prompt({
         name: 'row',
         type: 'input',
@@ -39,7 +52,14 @@ async function buttonBuilder(options) {
         },
     });
 
+    btn.row = getRow.row;
+
     console.log('');
+
+    // Checks if file exists in row folder
+    var fileCheck = await readFile(`./src/interactions/buttons/${btn.row}/${btn.name.split('/')[0]}.button.${btn.fw}`).catch((err) => false);
+
+    if (fileCheck !== false) puts(chalk.bold(chalk.red('\nERROR:'))) && puts(` "${btn.name}" already exists in row "${btn.row}". Process exited.\n\n`) && process.exit(1);
 
     var buttonType = await inquirer.prompt({
         name: 'type',
@@ -51,15 +71,8 @@ async function buttonBuilder(options) {
 
     console.log('');
 
-    var btn = {
-        version: djsconfig.version,
-        name: options.component,
-        row: getRow.row,
-        type: buttonType.type,
-        role: 'role_id',
-        format: djsconfig.format,
-        fw: null,
-    };
+    btn.type = buttonType.type;
+    btn.role = 'role_id';
 
     if (btn.type === 'Role') {
         var btnRole = await inquirer.prompt({
@@ -72,16 +85,6 @@ async function buttonBuilder(options) {
         btn.role = btnRole.id;
     }
 
-    if (btn.format === 'JavaScript') {
-        btn.fw = 'js';
-    } else if (btn.format === 'TypeScript') {
-        btn.fw = 'ts';
-    } else console.log(chalk.red(`\nUnknown djsconfig format "${btn.format}". Valid options are JavaScript and Typescript\n`)) && process.exit(1);
-
-    var fileCheck = await readFile(`./src/interactions/buttons/${btn.row}/${btn.name.split('/')[0]}.button.${btn.fw}`).catch((err) => false);
-
-    if (fileCheck !== false) puts(chalk.bold(chalk.red('\nERROR:'))) & puts(` "${btn.name}" already exists in row ${btn.row}. Process exited.\n\n`) && process.exit(1);
-
     download(`github:discordjs-cli/${btn.fw}-boilerplate-button#${btn.version}`, `src/interactions/buttons/${btn.row}/`, {}, async (err) => {
         if (err) console.log(err) && process.exit(1);
         try {
@@ -89,24 +92,33 @@ async function buttonBuilder(options) {
             // Move file up one dir
 
             // Rename file
-            await rename(
-                `./src/interactions/buttons/${btn.row}/%button_id%.command.${btn.fw}`,
-                `./src/interactions/buttons/${btn.row}/${btn.name.replace(/ /g, '-')}.command.${btn.fw}`
-            );
+            if (btn.type === 'Role') {
+                await rm(`./src/interactions/buttons/${btn.row}/%button_id%.default.button.${btn.fw}`);
+                await rename(
+                    `./src/interactions/buttons/${btn.row}/%button_id%.role.button.${btn.fw}`,
+                    `./src/interactions/buttons/${btn.row}/${btn.name.replace(/ /g, '-')}.button.${btn.fw}`
+                );
+            } else if (btn.type === 'Blank') {
+                await rm(`./src/interactions/buttons/${btn.row}/%button_id%.role.button.${btn.fw}`);
+                await rename(
+                    `./src/interactions/buttons/${btn.row}/%button_id%.default.button.${btn.fw}`,
+                    `./src/interactions/buttons/${btn.row}/${btn.name.replace(/ /g, '-')}.button.${btn.fw}`
+                );
+            }
 
             // Update contents
-            var update = readFileSync(`./src/interactions/buttons/${btn.name}/${btn.name.replace(/ /g, '-')}.command.${btn.fw}`, 'utf8');
+            var update = readFileSync(`./src/interactions/buttons/${btn.row}/${btn.name.replace(/ /g, '-')}.button.${btn.fw}`, 'utf8');
 
             update = update.replace(/%button_id%/g, `${btn.name.toLowerCase()}`).replace(/%role_id%/g, btn.role);
 
-            writeFileSync(`./src/interactions/buttons/${btn.name}/${btn.name.replace(/ /g, '-')}.command.${btn.fw}`, update, { encoding: 'utf8' });
+            writeFileSync(`./src/interactions/buttons/${btn.row}/${btn.name.replace(/ /g, '-')}.button.${btn.fw}`, update, { encoding: 'utf8' });
 
             buildCommand.success();
 
             puts(chalk.green('\nButton created!\n'));
-            puts('This will be triggered when a button with the ID');
+            puts('\nThis will be triggered when a button with the ID');
             puts(chalk.yellow(` ${btn.name}`));
-            puts(' is clicked.');
+            puts(' is clicked.\n');
         } catch (err) {
             buildCommand.error();
             console.log(err) && process.exit(1);
