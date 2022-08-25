@@ -2,6 +2,7 @@
 # A CLI for creating Discord.js bots with ease.
 
 ##### Main updates:
+- Added: deploy prompt when a slash command is made
 - Bug fix: `djs init` => scripts now have proper run prefix
 - Update: Edited response after `djs init` command is run
 

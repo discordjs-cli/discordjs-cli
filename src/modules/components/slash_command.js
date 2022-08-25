@@ -61,7 +61,9 @@ async function slashCommand(options) {
 
             buildCommand.success();
 
-            console.log(chalk.green('\nCommand created!'));
+            puts(chalk.green('\nCommand created!'));
+            puts(' Deploy it with ');
+            puts(chalk.yellow(' djs deploy\n'));
         } catch (err) {
             buildCommand.error();
             console.log(err) && process.exit(1);
