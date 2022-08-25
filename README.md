@@ -4,7 +4,7 @@
 ##### Main updates:
 - Added: sub command added in parent command
 - Bug fix: sub command file overwrite
-- Update: error handling when adding sub commands
+- Update: info on where subcommands are in the interactions object
 
 ## ⚙️ Installation:
 NOTE: You'll need to install the CLI globally in order for it to work. Nodemon is used to run the projects, so go ahead and install that as well.

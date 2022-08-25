@@ -124,6 +124,8 @@ async function subCommand(options) {
             buildCommand.success();
 
             console.log(chalk.green('\nSubcommand created!'));
+            puts('\nAccess subcommands with on the interaction object:')
+            puts(chalk.yellow(' interaction.options._subcommand\n'))
         } catch (err) {
             buildCommand.error();
             console.log(err) && process.exit(1);
