@@ -4,3 +4,5 @@ node_modules
 node_modules/.cache/esm/.data.json
 node_modules/.cache/esm/.data.blob
 node_modules/.cache/esm/.data.json
+*.blob
+node_modules/.cache/esm/.data.json
