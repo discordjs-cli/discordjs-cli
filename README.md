@@ -9,6 +9,8 @@
 ## ⚙️ Installation:
 NOTE: You'll need to install the CLI globally in order for it to work. Nodemon is used to run the projects, so go ahead and install that as well.
 
+##### Node v16+ is required
+
 ```
 sudo npm i -g @discordjs-cli/discordjs-cli
 sudo npm install -g nodemon
@@ -156,6 +158,6 @@ If you've worked with the Angular CLI, then this will look familiar xD
 
 I work on quite a few bots, and I thought for sure theres got to be a faster way to go about things. I present to you: the Discord.js CLI 🎉
 
-TODO: Add menus, menu options, buttons, etc.
+TODO: Add menus, menu options and modals?.
 
 If you have any suggestions, feel free to add them to the GitHub repo! I want this to be the most epic thing since sliced bread :D
