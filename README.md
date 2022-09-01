@@ -3,7 +3,7 @@
 
 ##### Main updates:
 - Added: menus and menu options
-- Bug fix: none
+- Bug fix: documentation
 - Update: documentation
 
 Report bugs [here](https://github.com/discordjs-cli/discordjs-cli/issues)
@@ -65,8 +65,6 @@ And your bot should be online!
 -------------------------------------------------------------------------------------
 
 # 😌 Add commands, buttons, menus, etc!
-
--------------------------------------------------------------------------------------
 
 # /Slash commands
 #### NOTE: Slash commands need to be deployed in order for them to show up on discord
