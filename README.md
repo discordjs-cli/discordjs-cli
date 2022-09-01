@@ -4,7 +4,7 @@
 ##### Main updates:
 - Added: menus and menu options
 - Bug fix: documentation
-- Update: documentation
+- Update: help command
 
 Report bugs [here](https://github.com/discordjs-cli/discordjs-cli/issues)
 

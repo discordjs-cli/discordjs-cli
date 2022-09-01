@@ -34,21 +34,16 @@ async function help() {
             description: 'Generate a button',
             alias: 'djs g b <data>',
         },
-        // {
-        //     command: 'djs generate menu <menu>',
-        //     description: 'Generate a menu',
-        //     alias: 'djs g m <data>',
-        // },
-        // {
-        //     command: 'djs generate menu-option <path/to/menu/option>',
-        //     description: 'Generate a menu option',
-        //     alias: 'djs g mo <data>',
-        // },
-        // {
-        //     command: 'djs generate legacy <command>',
-        //     description: 'Generate a legacy command',
-        //     alias: 'djs g l <data>',
-        // },
+        {
+            command: 'djs generate menu <menu-name/option-id>',
+            description: 'Generate a menu',
+            alias: 'djs g menu <data>',
+        },
+        {
+            command: 'djs generate legacy <command>',
+            description: 'Generate a legacy command',
+            alias: 'djs g l <data>',
+        },
         {
             command: 'djs --help',
             description: 'Get a list of commands',
