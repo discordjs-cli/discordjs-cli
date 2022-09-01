@@ -31,10 +31,20 @@ async function menuBuilder(options) {
     var menu = {
         version: djsconfig.version,
         name: options.component.split('/').splice(-2, 1).pop(),
-        id: options.component.split('/').pop(),
+        option: options.component.split('/').pop(),
         format: djsconfig.format,
         fw: null,
     };
+
+    if (!menu.name || options.component.split('/').length < 2) {
+        puts('Invalid command command usage: ');
+
+        puts(chalk.yellow('djs g menu <menu-name/option-id>\n\n'));
+
+        console.log('Run the "djs --help" command for more.');
+
+        return process.exit(1);
+    }
 
     if (menu.format === 'JavaScript') {
         menu.fw = 'js';
@@ -45,24 +55,29 @@ async function menuBuilder(options) {
     download(`github:discordjs-cli/${menu.fw}-boilerplate-menu#${menu.version}`, `src/interactions/menus/${menu.name}`, {}, async (err) => {
         if (err) console.log(err) && process.exit(1);
         try {
-            var buildCommand = createSpinner(chalk.blue(`Creating option ${menu.id} in menu ${menu.name}...`), { color: 'white' }).start();
+            var buildCommand = createSpinner(chalk.blue(`Creating option ${menu.option} in menu ${menu.name}...`), { color: 'white' }).start();
 
             // Rename file
             await rename(
                 `./src/interactions/menus/${menu.name}/%menu_name%.menu.${menu.fw}`,
-                `./src/interactions/menus/${menu.name}/${menu.name.replace(/ /g, '-')}.menu.${menu.fw}`
+                `./src/interactions/menus/${menu.name}/${menu.option.replace(/ /g, '-')}.menu.${menu.fw}`
             );
 
             // Update contents
-            var update = readFileSync(`./src/interactions/menus/${menu.name}/${menu.name.replace(/ /g, '-')}.menu.${menu.fw}`, 'utf8');
+            var update = readFileSync(`./src/interactions/menus/${menu.name}/${menu.option.replace(/ /g, '-')}.menu.${menu.fw}`, 'utf8');
 
-            update = update.replace(/%menu_name%/g, `${menu.name.toLowerCase().replace(' ', '-')}`);
+            update = update.replace(/%menu_name%/g, `${menu.name}`).replace(/%menu_option%/g, `${menu.option}`);
 
-            writeFileSync(`./src/interactions/menus/${menu.name}/${menu.name.replace(/ /g, '-')}.menu.${menu.fw}`, update, { encoding: 'utf8' });
+            writeFileSync(`./src/interactions/menus/${menu.name}/${menu.option.replace(/ /g, '-')}.menu.${menu.fw}`, update, { encoding: 'utf8' });
 
             buildCommand.success();
 
-            puts(chalk.green('\Menu created!'));
+            puts(chalk.green(`\nMenu created!\n\n`));
+            puts(`This file will be triggered when a menu with the ID "`);
+            puts(chalk.yellow(`${menu.name}`));
+            puts(`" and value "`);
+            puts(chalk.yellow(`${menu.option}`));
+            puts(`" is selected.\n`);
         } catch (err) {
             buildCommand.error();
             console.log(err) && process.exit(1);

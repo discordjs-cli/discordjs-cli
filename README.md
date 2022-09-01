@@ -2,9 +2,13 @@
 # A CLI for creating Discord.js bots with ease.
 
 ##### Main updates:
-- Added: sub command added in parent command
-- Bug fix: sub command file overwrite
-- Update: info on where subcommands are in the interactions object
+- Added: menus and menu options
+- Bug fix: none
+- Update: documentation
+
+Report bugs [here](https://github.com/discordjs-cli/discordjs-cli/issues)
+
+-------------------------------------------------------------------------------------
 
 ## ⚙️ Installation:
 NOTE: You'll need to install the CLI globally in order for it to work. Nodemon is used to run the projects, so go ahead and install that as well.
@@ -15,6 +19,8 @@ NOTE: You'll need to install the CLI globally in order for it to work. Nodemon i
 sudo npm i -g @discordjs-cli/discordjs-cli
 sudo npm install -g nodemon
 ```
+
+-------------------------------------------------------------------------------------
 
 ## 🌚 Create a project
 
@@ -37,6 +43,8 @@ djs run
 
 And your bot should be online!
 
+-------------------------------------------------------------------------------------
+
 ## 🔨 Initiate a project
 Initiate an existing project like so:
 ```
@@ -54,7 +62,11 @@ djs run
 
 And your bot should be online!
 
-## 😌 Add commands, buttons, menus, etc!
+-------------------------------------------------------------------------------------
+
+# 😌 Add commands, buttons, menus, etc!
+
+-------------------------------------------------------------------------------------
 
 # /Slash commands
 #### NOTE: Slash commands need to be deployed in order for them to show up on discord
@@ -95,6 +107,8 @@ To delete slash commands, run the following command:
 djs delete
 ```
 
+-------------------------------------------------------------------------------------
+
 # !Legacy commands
 ### Create a legacy command
 To create a legacy command, run the following command:
@@ -104,6 +118,8 @@ djs generate legacy <command-name>
 ```
 
 This will create a new legacy command template in our `./src/interactions/legacy_commands/` folder.
+
+-------------------------------------------------------------------------------------
 
 # 🔘 Buttons
 ### Create a button
@@ -136,9 +152,20 @@ Selecting "Blank" will create a blank template, while selecting "Role" will have
 
 And thats it! When a role with the button ID you provided is clicked, the newly created button handler will run!
 
+-------------------------------------------------------------------------------------
 
+# 📂 Menus
+### Create a menu
+To create a menu, run the following command:
+```
+# alternatively, use djs g menu <menu-name/option-id>
+djs generate menu <menu-name/option-id>
+```
+This will create a folder in our "./src/menus" directory with the "menu-name" name, if none exists, then create our menu option file. The newly created menu file will be triggered when a menu with the the menu ID and menu option we specified in the command is selected.
 
-## Misc commands
+-------------------------------------------------------------------------------------
+
+# Misc commands
 
 To check the version of djs, run the following command:
 ```
@@ -152,12 +179,13 @@ djs --update
 
 This will run `sudo npm i -g @discordjs-cli/discordjs-cli`. Note, you may be prompted for your password as the command is run with sudo.
 
+-------------------------------------------------------------------------------------
 
 ## Im still working on getting this to version 1, but I hope theres an appeal for it! :D
 If you've worked with the Angular CLI, then this will look familiar xD
 
 I work on quite a few bots, and I thought for sure theres got to be a faster way to go about things. I present to you: the Discord.js CLI 🎉
 
-TODO: Add menus, menu options and modals?.
+TODO: Add modals, and the one clicky thingy i forgor what its called 💀
 
-If you have any suggestions, feel free to add them to the GitHub repo! I want this to be the most epic thing since sliced bread :D
+If you have any suggestions, feel free to add them to the [discussions page](https://github.com/discordjs-cli/discordjs-cli/discussions) on the GitHub repo! I want this to be the most epic thing since sliced bread :D
