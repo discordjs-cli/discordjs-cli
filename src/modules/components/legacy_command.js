@@ -53,7 +53,7 @@ async function legacyCommand(options) {
         puts(` A folder named`);
         puts(chalk.blue(` "${cmd.name}"`));
         puts(` already exists in this directory. Process exited\n`);
-        process.exit(1);
+        return process.exit(1);
     }
 
     if (cmd.format === 'JavaScript') {

@@ -49,7 +49,7 @@ async function scripts(options) {
                 scriptExists(script);
                 console.log('Running update script');
                 try {
-                    execSync(`node ${djsconfig.scripts[script]}`, { stdio: 'inherit' });
+                    execSync(`${djsconfig.scripts[script]}`, { stdio: 'inherit' });
                 } catch (err) {
                     console.log(err);
                 }
@@ -58,7 +58,7 @@ async function scripts(options) {
                 scriptExists(script);
                 console.log('Running update script');
                 try {
-                    execSync(`node ${djsconfig.scripts[script]}`, { stdio: 'inherit' });
+                    execSync(`${djsconfig.scripts[script]}`, { stdio: 'inherit' });
                 } catch (err) {
                     console.log(err);
                 }

@@ -2,9 +2,9 @@
 # A CLI for creating Discord.js bots with ease.
 
 ##### Main updates:
-- Added: menus and menu options
-- Bug fix: documentation
-- Update: help command
+- Added: n/a
+- Bug fix: n/a
+- Update: config.json is now config.js/config.ts for use with intellisense
 
 Report bugs [here](https://github.com/discordjs-cli/discordjs-cli/issues)
 
@@ -35,7 +35,7 @@ djs new <project name>
 ```
 This will walk you through the setup process of creating a new Discord.js, or Discord.ts bot.
 
-Once your bot has been made, you can `cd` into the bot directory. The bot itself is in the ./src folder. In the ./src folder, theres a config folder that has a config.json file inside. Add your bots token, client ID, etc. and then run:
+Once your bot has been made, you can `cd` into the bot directory. The bot itself is in the ./src folder. In the ./src folder, theres a config folder that has a config.js/ts file inside. Add your bots token, client ID, etc. and then run:
 
 ```
 djs run
@@ -85,7 +85,7 @@ djs generate subcommand <command-name/subcommand-name>
 ```
 
 ### Deploying slash commands
-###### NOTE: By default, commands are run for DEV commands; to the guild specified in your config.json file. Specify the `-g` flag in the command, ie. `djs deploy -g`, to run globally.
+###### NOTE: By default, commands are run for DEV commands; to the guild specified in your config.js/ts file. Specify the `-g` flag in the command, ie. `djs deploy -g`, to run globally.
 
 To deploy slash commands, run the following command:
 ```

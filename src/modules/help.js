@@ -45,6 +45,18 @@ async function help() {
             alias: 'djs g l <data>',
         },
         {
+            command: 'djs deploy',
+            description: 'Deploy slash commands and subcommands. Specify the "-g" flag to deploy globally',
+        },
+        {
+            command: 'djs update',
+            description: 'Updates slash commands and subcommands, removing ones the files no longer exist for. Specify the "-g" flag to update globally',
+        },
+        {
+            command: 'djs delete',
+            description: 'Remove all slash commands and subcommands form the Discord API [does NOT delete the files]. Specify the "-g" flag to delete globally',
+        },
+        {
             command: 'djs --help',
             description: 'Get a list of commands',
         },
@@ -54,7 +66,7 @@ async function help() {
             alias: 'djs -v',
         },
         {
-            command: 'djs update',
+            command: 'djs --update',
             description: 'Update discordjs-cli',
         },
     ];

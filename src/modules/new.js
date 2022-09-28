@@ -90,17 +90,19 @@ async function newDiscordBot(options) {
 
     console.log('');
 
-    var configJSON = {
-        PREFIX: pre.fix,
-        BOT_NAME: botName.name,
-        TOKEN: '',
-        CLIENT_ID: '',
-        DEV_GUILD_ID: '',
-        LOG_CHANNEL: '',
-        STATUS: 'idle',
-        ACTIVITY: 'discord',
-        TYPE: 'Watching',
-    };
+    var botConfig = `{
+    PREFIX: %prefix%,
+    BOT_NAME: %bot_name%,
+    TOKEN: '',
+    CLIENT_ID: '',
+    DEV_GUILD_ID: '',
+    LOG_CHANNEL: '',
+    STATUS: 'idle',
+    ACTIVITY: 'discord',
+    TYPE: 'Watching',
+}`.replace('%prefix%', pre.fix).replace('%bot_name%', botName.name);
+
+    fw === 'js' ? botConfig = 'module.exports = ' + botConfig : botConfig = 'export default ' + botConfig;
 
     /******************************
      *      Project Creation      *
@@ -195,8 +197,8 @@ async function newDiscordBot(options) {
     });
 
     // Add bot config JSON
-    writeFileSync(`./${name}/src/config/config.json`, JSON.stringify(configJSON, null, 4), (err) => {
-        if (err) return console.log('An error occurred creating ./src/config/config.json') && process.exit(1);
+    writeFileSync(`./${name}/src/config/config.${fw}`, botConfig, (err) => {
+        if (err) return console.log(`An error occurred creating ./src/config/config.${fw}`) && process.exit(1);
     });
     configSpinner.success();
 
@@ -212,8 +214,10 @@ async function newDiscordBot(options) {
     console.log('');
 
     puts(chalk.blue(chalk.bold(name)));
-    puts(` has been created. Add the bots token to the`);
-    puts(chalk.green(' ./src/config/config.json'));
+    puts(` has been created.`);
+    puts(chalk.yellow(`\n\ncd ${name}`));
+    puts(`\n\nAdd the bots token to the`);
+    puts(chalk.green(` ./src/config/config.${fw}`));
     puts(' file. Lastly, execute');
     puts(chalk.yellow(' djs run'));
     puts(` to start your bot!\n\n`);
