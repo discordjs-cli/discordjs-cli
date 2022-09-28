@@ -91,8 +91,8 @@ async function newDiscordBot(options) {
     console.log('');
 
     var botConfig = `{
-    PREFIX: %prefix%,
-    BOT_NAME: %bot_name%,
+    PREFIX: '%prefix%',
+    BOT_NAME: '%bot_name%',
     TOKEN: '',
     CLIENT_ID: '',
     DEV_GUILD_ID: '',
